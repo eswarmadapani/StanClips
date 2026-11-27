@@ -4,11 +4,20 @@ title = "StanClips Gitleaks Configuration"
 useDefault = true
 
 [allowlist]
-description = "Narrowly scoped allowlist for verified harmless mock fixtures and explicit placeholders"
+description = "Narrowly scoped allowlist for verified harmless mock fixtures, public client IDs, and model identifiers"
 regexes = [
-    '''mock_test_[a-zA-Z0-9_]+''',
-    '''mock_dummy_[a-zA-Z0-9_]+''',
-    '''wrong_mock_[a-zA-Z0-9_]+''',
-    '''example_[a-zA-Z0-9_]+''',
+    '''mock_test_[a-zA-Z0-9_\-]+''',
+    '''mock_dummy_[a-zA-Z0-9_\-]+''',
+    '''wrong_mock_[a-zA-Z0-9_\-]+''',
+    '''example_[a-zA-Z0-9_\-]+''',
     '''change-me-[a-zA-Z0-9_\-]+''',
+    '''test-key-[a-zA-Z0-9_\-]+''',
+    '''kimne78kx3ncx6brgo4mv6wki5h1ko''',
+    '''llama-3\.3-70b-versatile''',
+]
+stopwords = [
+    "kimne78kx3ncx6brgo4mv6wki5h1ko",
+    "llama-3.3-70b-versatile",
+    "test-key-123456",
+    "test-key-abcdefgh12345678",
 ]
