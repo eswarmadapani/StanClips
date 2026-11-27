@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stan Clips - Manual Clip Layout Studio</title>
+  <link rel="icon" type="image/svg+xml" href="/brand/favicon.svg">
+  <style>
+    [hidden] { display: none !important; }
+    :root {
+      --bg-base: #111512;
+      --bg-surface: #181e1a;
+      --bg-panel: #202722;
+      --bg-card: #28312b;
+      --bg-card-hover: #323d36;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(204, 255, 0, 0.4);
+      --primary: #ccff00;
+      --primary-hover: #bde900;
+      --primary-glow: rgba(204, 255, 0, 0.2);
+      --on-primary: #172000;
+      --facecam-color: #00ff88;
+      --gameplay-color: #38bdf8;
+      --text: #f5f0eb;
+      --text-dim: #9c9285;
+      --text-muted: #6e655a;
+      --danger: #ef4444;
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg-base);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+
+    /* Top Bar */
+    header {
+      height: 56px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      gap: 16px;
+      z-index: 100;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 260px;
+    }
+    .back-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 12px;
+      border-radius: var(--radius);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .back-btn:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(255,255,255,0.15);
+    }
+    .video-title {
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 240px;
+    }
+    .res-badge {
+      font-size: 11px;
+      background: rgba(204, 255, 0, 0.14);
+      color: var(--primary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .header-center {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 4px 0;
+    }
+    .preset-pill {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+    .preset-pill:hover {
+      background: var(--bg-card);
+      color: var(--text);
+    }
+    .preset-pill.active {
+      background: var(--primary-glow);
+      border-color: var(--primary);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 280px;
+      justify-content: flex-end;
+    }
+    .btn {
+      padding: 8px 14px;
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .btn-secondary {
+      background: var(--bg-card);
+      border-color: var(--border);
+      color: var(--text);
+    }
+    .btn-secondary:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(255,255,255,0.2);
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: var(--on-primary);
+      font-weight: 600;
+      box-shadow: 0 2px 10px var(--primary-glow);
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 4px 16px var(--primary-glow);
+    }
+
+    /* Main Workspace (3 columns) */
+    .workspace {
+      flex: 1;
+      display: grid;
+      grid-template-columns: minmax(400px, 1.25fr) minmax(320px, 0.95fr) 380px;
+      gap: 1px;
+      background: var(--border);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .col {
+      background: var(--bg-surface);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .col-header {
+      padding: 12px 16px;
+      background: var(--bg-panel);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-dim);
+    }
+
+    /* Column 1: Source Video & Crop Area */
+    .source-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+      position: relative;
+      overflow: hidden;
+      padding: 16px;
+    }
+    .video-viewport {
+      position: relative;
+      display: inline-block;
+      max-width: 100%;
+      max-height: 100%;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.8);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    #srcVideo {
+      display: block;
+      max-width: 100%;
+      max-height: calc(100vh - 240px);
+      object-fit: contain;
+      pointer-events: none;
+    }
+    @keyframes studioSpin { to { transform: rotate(360deg); } }
+    .video-spinner {
+      width: 38px;
+      height: 38px;
+      border: 3px solid rgba(255, 255, 255, 0.15);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: studioSpin 0.8s linear infinite;
+    }
+    .crop-stage {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: auto;
+    }
+
+    /* Crop Boxes */
+    .crop-box {
+      position: absolute;
+      box-sizing: border-box;
+      cursor: move;
+      touch-action: none;
+      transition: box-shadow 0.15s ease;
+    }
+    .crop-box.facecam {
+      border: 2px solid var(--facecam-color);
+      background: rgba(0, 255, 136, 0.12);
+    }
+    .crop-box.gameplay {
+      border: 2px solid var(--gameplay-color);
+      background: rgba(255, 136, 0, 0.12);
+    }
+    .crop-box.active {
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.4), 0 0 16px rgba(0,0,0,0.6);
+      z-index: 10;
+    }
+    .crop-badge {
+      position: absolute;
+      top: -24px;
+      left: -2px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 3px 3px 0 0;
+      color: #000;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .crop-box.facecam .crop-badge { background: var(--facecam-color); }
+    .crop-box.gameplay .crop-badge { background: var(--gameplay-color); }
+
+    /* Handles */
+    .handle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #fff;
+      border: 1px solid #000;
+      border-radius: 2px;
+    }
+    .handle.nw { top: -5px; left: -5px; cursor: nw-resize; }
+    .handle.n  { top: -5px; left: calc(50% - 5px); cursor: n-resize; }
+    .handle.ne { top: -5px; right: -5px; cursor: ne-resize; }
+    .handle.e  { top: calc(50% - 5px); right: -5px; cursor: e-resize; }
+    .handle.se { bottom: -5px; right: -5px; cursor: se-resize; }
+    .handle.s  { bottom: -5px; left: calc(50% - 5px); cursor: s-resize; }
+    .handle.sw { bottom: -5px; left: -5px; cursor: sw-resize; }
+    .handle.w  { top: calc(50% - 5px); left: -5px; cursor: w-resize; }
+
+    /* Region Controls strip below video */
+    .source-strip {
+      padding: 10px 16px;
+      background: var(--bg-panel);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 12px;
+    }
+    .region-tab-group {
+      display: flex;
+      gap: 6px;
+    }
+    .region-tab {
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-dim);
+      font-weight: 500;
+    }
+    .region-tab.active-facecam {
+      background: rgba(0, 255, 136, 0.15);
+      border-color: var(--facecam-color);
+      color: var(--facecam-color);
+      font-weight: 600;
+    }
+    .region-tab.active-gameplay {
+      background: rgba(255, 136, 0, 0.15);
+      border-color: var(--gameplay-color);
+      color: var(--gameplay-color);
+      font-weight: 600;
+    }
+    .coords-readout {
+      color: var(--text-dim);
+      font-family: monospace;
+      font-size: 11px;
+    }
+    .nudge-controls {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .nudge-btn {
+      width: 24px;
+      height: 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 11px;
+    }
+    .nudge-btn:hover { background: var(--bg-card-hover); }
+
+    /* Column 2: 9:16 Vertical Canvas Preview */
+    .preview-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #090706;
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .canvas-wrapper {
+      position: relative;
+      width: 280px;
+      height: 497px; /* 9:16 ratio */
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9), 0 0 0 1px var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #000;
+    }
+    #previewCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    #ffmpegPreviewImg {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover;
+      display: none;
+      z-index: 5;
+    }
+    .safe-zone-overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      display: none;
+      z-index: 10;
+    }
+    .safe-zone-overlay.active { display: block; }
+    .sz-header {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 14%;
+      background: rgba(239, 68, 68, 0.12);
+      border-bottom: 1px dashed rgba(239, 68, 68, 0.5);
+      color: rgba(239, 68, 68, 0.8);
+      font-size: 10px;
+      padding: 4px 8px;
+    }
+    .sz-side {
+      position: absolute;
+      right: 0; top: 14%; width: 20%; height: 60%;
+      background: rgba(239, 68, 68, 0.12);
+      border-left: 1px dashed rgba(239, 68, 68, 0.5);
+      color: rgba(239, 68, 68, 0.8);
+      font-size: 10px;
+      writing-mode: vertical-rl;
+      padding: 8px 4px;
+    }
+    .sz-footer {
+      position: absolute;
+      bottom: 0; left: 0; width: 100%; height: 26%;
+      background: rgba(239, 68, 68, 0.12);
+      border-top: 1px dashed rgba(239, 68, 68, 0.5);
+      color: rgba(239, 68, 68, 0.8);
+      font-size: 10px;
+      padding: 4px 8px;
+    }
+
+    .preview-toolbar {
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+    .preview-tool {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      color: var(--text-dim);
+    }
+    .preview-tool:hover { color: var(--text); }
+    .preview-tool input { cursor: pointer; }
+
+    /* Column 3: Inspector Panel */
+    .inspector {
+      background: var(--bg-surface);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-panel);
+    }
+    .tab {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-dim);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s ease;
+    }
+    .tab:hover { color: var(--text); background: var(--bg-card); }
+    .tab.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+      background: var(--bg-surface);
+    }
+
+    .tab-content {
+      padding: 16px;
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .tab-content.active { display: flex; }
+
+    .prop-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .prop-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+    }
+    .prop-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 13px;
+    }
+    .prop-label { color: var(--text-dim); }
+    .prop-input {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 13px;
+      width: 110px;
+      text-align: right;
+    }
+    .prop-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    .prop-select {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 13px;
+      width: 140px;
+      cursor: pointer;
+    }
+    .prop-slider {
+      flex: 1;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    /* Template Cards */
+    .template-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .template-card:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(255,255,255,0.15);
+    }
+    .template-card.active {
+      border-color: var(--primary);
+      background: var(--primary-glow);
+    }
+    .tc-name { font-size: 13px; font-weight: 600; color: var(--text); }
+    .tc-desc { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+
+    /* Bottom Scrubber Timeline */
+    footer {
+      height: 64px;
+      background: var(--bg-panel);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 16px;
+      z-index: 100;
+    }
+    .playback-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pb-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.15s ease;
+    }
+    .pb-btn:hover { background: var(--bg-card-hover); border-color: rgba(255,255,255,0.2); }
+    .pb-btn.play { background: var(--primary); color: var(--on-primary); border: none; font-weight: 600; }
+    .pb-btn.play:hover { background: var(--primary-hover); }
+
+    .timeline-bar {
+      flex: 1;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .timeline-track {
+      position: relative;
+      height: 20px;
+      background: var(--bg-card);
+      border-radius: 4px;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    .timeline-progress {
+      position: absolute;
+      top: 0; left: 0; height: 100%;
+      background: var(--primary);
+      width: 0%;
+      pointer-events: none;
+      opacity: 0.8;
+    }
+    .clip-marker {
+      position: absolute;
+      top: 2px; height: 16px;
+      background: rgba(0, 255, 136, 0.35);
+      border-left: 2px solid var(--facecam-color);
+      border-right: 2px solid var(--facecam-color);
+      pointer-events: none;
+      border-radius: 2px;
+    }
+    .time-display {
+      font-size: 11px;
+      font-family: monospace;
+      color: var(--text-dim);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Toast */
+    #toast {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(20, 24, 22, 0.94);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1000;
+    }
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+<!-- STAN_THEME -->
+</head>
+<body data-studio="layout_studio">
+<!-- STAN_PAGE -->
+<script>
+    // Extract Job ID from URL path: /app/layout-studio/{jid}
+    const pathParts = window.location.pathname.split('/');
+    const jobId = pathParts[pathParts.indexOf('layout-studio') + 1] || '';
+
+    const isDraft = jobId === "draft";
+    let draft;
+    let state = {
+      jobId: jobId,
+      title: '',
+      duration: 0,
+      srcW: 1280,
+      srcH: 720,
+      layout: null,
+      presets: {},
+      templates: [],
+      clips: [],
+      activeRegion: 'facecam',
+      activeLayerId: 'facecam',
+      showSafeZones: false,
+      showHook: true,
+      showCaptions: true,
+      isPlaying: false
+    };
+
+    const video = document.getElementById('srcVideo');
+    const canvas = document.getElementById('previewCanvas');
+    const ctx = canvas.getContext('2d');
+    const cropStage = document.getElementById('cropStage');
+    const facecamBox = document.getElementById('facecamBox');
+    const gameplayBox = document.getElementById('gameplayBox');
+    const ffmpegImg = document.getElementById('ffmpegPreviewImg');
+
+    // Load Job Data & Initialize
+    async function initStudio() {
+      const spinner = document.getElementById('videoLoadingSpinner');
+      const spinnerText = document.getElementById('videoLoadingText');
+      function showSpinner(msg) {
+        if (spinner) {
+          spinner.style.display = 'flex';
+          if (spinnerText && msg) spinnerText.textContent = msg;
+        }
+      }
+      function hideSpinner() {
+        if (spinner) spinner.style.display = 'none';
+      }
+
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlParam = urlParams.get('url');
+
+        if (isDraft) {
+          draft = window.opener?.layoutDraftFor?.(window);
+          if (!draft) {
+            try {
+              const raw = localStorage.getItem("peakcut_active_draft");
+              if (raw) {
+                const parsed = JSON.parse(raw);
+                draft = {
+                  source: parsed.source,
+                  layout: parsed.layout,
+                  save: (l) => {
+                    try {
+                      if (parsed.source?.key) {
+                        localStorage.setItem("peakcut_saved_layout_" + parsed.source.key, JSON.stringify(l));
+                      }
+                      localStorage.setItem("peakcut_saved_layout_", JSON.stringify(l));
+                    } catch (e) {}
+                  }
+                };
+              }
+            } catch (e) {}
+          }
+          if (!draft && urlParam) {
+            draft = {
+              source: { key: urlParam, url: urlParam, title: urlParam },
+              layout: null,
+              save: (l) => {
+                try {
+                  localStorage.setItem("peakcut_saved_layout_" + urlParam, JSON.stringify(l));
+                  localStorage.setItem("peakcut_saved_layout_", JSON.stringify(l));
+                } catch (e) {}
+              }
+            };
+          }
+        }
+
+        const draftUrl = draft?.source?.url || (isDraft ? urlParam : "") || "";
+        const apiUrl = isDraft
+          ? (draftUrl ? `/api/layout-draft?url=${encodeURIComponent(draftUrl)}` : '/api/layout-draft')
+          : `/api/layout-studio/${jobId}`;
+
+        if (draftUrl) showSpinner("Analyzing video and getting middle frame...");
+        const res = await fetch(apiUrl);
+        if (!res.ok) throw new Error('Failed to load video metadata.');
+        const data = await res.json();
+
+        state.title = (data.title && data.title !== 'Sample clip' ? data.title : null) || draft?.source?.title || data.title || 'Untitled Video';
+        state.duration = data.duration || draft?.source?.duration || 0;
+        state.srcW = data.width || 1280;
+        state.srcH = data.height || 720;
+        state.layout = structuredClone(draft?.layout || data.layout);
+        state.presets = data.presets || {};
+        state.templates = data.templates || [];
+        state.clips = data.clips || [];
+
+        document.getElementById('videoTitle').textContent = state.title;
+        document.getElementById('videoResBadge').textContent = `${state.srcW}x${state.srcH}`;
+        document.getElementById('durationLabel').textContent = formatTime(state.duration);
+
+        // Load Source Video
+        if (isDraft) {
+          document.getElementById('generateClipsBtn').hidden = true;
+          document.getElementById('previewFrameBtn').hidden = true;
+          document.querySelector('.timeline-bar').hidden = true;
+          const saveBtn = document.getElementById('saveLayoutBtn');
+          saveBtn.textContent = "Use this layout";
+          saveBtn.className = "btn btn-primary";
+        }
+        video.addEventListener('loadedmetadata', () => {
+          state.srcW = video.videoWidth || state.srcW;
+          state.srcH = video.videoHeight || state.srcH;
+          document.getElementById('videoResBadge').textContent = state.srcW + 'x' + state.srcH;
+
+          // Always select frame from the middle of the video (50%), never random and never start
+          const dur = video.duration || state.duration || 0;
+          if (!draftUrl && dur > 0) {
+            video.currentTime = dur / 2.0;
+          }
+          updateCropBoxPositions();
+          renderClipMarkers();
+          startCanvasLoop();
+        });
+
+        video.addEventListener('canplay', () => {
+          hideSpinner();
+        });
+
+        video.addEventListener('error', () => {
+          hideSpinner();
+          showToast("Could not load this preview. Try selecting the video file or checking the link.");
+        });
+
+        video.preload = "auto";
+        const videoSrc = isDraft
+          ? (draftUrl ? `/api/layout-draft/frame?url=${encodeURIComponent(draftUrl)}` : (draft?.source?.src || "/brand/demo-clean.mp4"))
+          : `/api/layout-studio/${jobId}/source`;
+
+        showSpinner(draftUrl ? "Extracting middle frame from video..." : "Loading video...");
+        video.src = videoSrc;
+
+        video.addEventListener('timeupdate', () => {
+          updateTimeline();
+        });
+
+        // Initialize UI panels
+        renderPresetCards();
+        renderTemplateCards();
+        syncInspectorWithLayout();
+        updateActivePresetPill(state.layout.preset);
+
+      } catch (err) {
+        hideSpinner();
+        showToast('Error loading studio: ' + err.message);
+      }
+    }
+
+    // Format seconds to mm:ss
+    function formatTime(sec) {
+      sec = Math.max(0, Math.floor(sec || 0));
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+
+    // Tab Switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tabId));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.toggle('active', c.id === `tab-${tabId}`));
+    }
+
+    // Active Region Selection
+    function selectRegion(name) {
+      state.activeRegion = name;
+      state.activeLayerId = name;
+      document.getElementById('selFacecamTab').className = `region-tab ${name === 'facecam' ? 'active-facecam' : ''}`;
+      document.getElementById('selGameplayTab').className = `region-tab ${name === 'gameplay' ? 'active-gameplay' : ''}`;
+      facecamBox.classList.toggle('active', name === 'facecam');
+      gameplayBox.classList.toggle('active', name === 'gameplay');
+      document.getElementById('layerSelect').value = name;
+      updateCoordsReadout();
+      syncLayerInspector();
+    }
+
+    // Coordinate Readout Display
+    function updateCoordsReadout() {
+      const reg = state.layout.regions[state.activeRegion];
+      const pxX = Math.round(reg.x * state.srcW);
+      const pxY = Math.round(reg.y * state.srcH);
+      const pxW = Math.round(reg.w * state.srcW);
+      const pxH = Math.round(reg.h * state.srcH);
+      document.getElementById('coordsReadout').textContent = `X: ${pxX} | Y: ${pxY} | W: ${pxW} | H: ${pxH} px`;
+    }
+
+    // Nudge Selected Region
+    function nudge(dx, dy) {
+      const reg = state.layout.regions[state.activeRegion];
+      const stepX = 2 / state.srcW;
+      const stepY = 2 / state.srcH;
+      reg.x = Math.max(0, Math.min(1 - reg.w, reg.x + dx * stepX));
+      reg.y = Math.max(0, Math.min(1 - reg.h, reg.y + dy * stepY));
+      updateCropBoxPositions();
+      updateCoordsReadout();
+      hideFfmpegPreview();
+    }
+
+    // Update Crop Box Positions from layout state
+    function updateCropBoxPositions() {
+      const fc = state.layout.regions.facecam;
+      const gm = state.layout.regions.gameplay;
+
+      facecamBox.style.left = `${fc.x * 100}%`;
+      facecamBox.style.top = `${fc.y * 100}%`;
+      facecamBox.style.width = `${fc.w * 100}%`;
+      facecamBox.style.height = `${fc.h * 100}%`;
+
+      gameplayBox.style.left = `${gm.x * 100}%`;
+      gameplayBox.style.top = `${gm.y * 100}%`;
+      gameplayBox.style.width = `${gm.w * 100}%`;
+      gameplayBox.style.height = `${gm.h * 100}%`;
+
+      updateCoordsReadout();
+    }
+
+    // Interactive Dragging and Resizing Logic
+    let dragInfo = null;
+
+    function handleMouseDown(e) {
+      const handleEl = e.target.closest('.handle');
+      const boxEl = e.target.closest('.crop-box');
+      if (!boxEl && !handleEl) return;
+
+      const targetBox = handleEl ? handleEl.closest('.crop-box') : boxEl;
+      const regionKey = targetBox.dataset.region;
+      selectRegion(regionKey);
+
+      const stageRect = cropStage.getBoundingClientRect();
+      const reg = state.layout.regions[regionKey];
+
+      dragInfo = {
+        region: regionKey,
+        isResize: !!handleEl,
+        handle: handleEl ? handleEl.dataset.handle : null,
+        startX: e.clientX,
+        startY: e.clientY,
+        stageW: stageRect.width,
+        stageH: stageRect.height,
+        initX: reg.x,
+        initY: reg.y,
+        initW: reg.w,
+        initH: reg.h
+      };
+
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+      e.preventDefault();
+    }
+
+    function handleMouseMove(e) {
+      if (!dragInfo) return;
+      const dx = (e.clientX - dragInfo.startX) / dragInfo.stageW;
+      const dy = (e.clientY - dragInfo.startY) / dragInfo.stageH;
+      const reg = state.layout.regions[dragInfo.region];
+
+      if (!dragInfo.isResize) {
+        // Drag move
+        reg.x = Math.max(0, Math.min(1 - dragInfo.initW, dragInfo.initX + dx));
+        reg.y = Math.max(0, Math.min(1 - dragInfo.initH, dragInfo.initY + dy));
+      } else {
+        // Handle resize
+        const h = dragInfo.handle;
+        let nx = dragInfo.initX;
+        let ny = dragInfo.initY;
+        let nw = dragInfo.initW;
+        let nh = dragInfo.initH;
+
+        if (h.includes('e')) nw = Math.max(0.05, Math.min(1 - nx, dragInfo.initW + dx));
+        if (h.includes('s')) nh = Math.max(0.05, Math.min(1 - ny, dragInfo.initH + dy));
+        if (h.includes('w')) {
+          const right = dragInfo.initX + dragInfo.initW;
+          nx = Math.max(0, Math.min(right - 0.05, dragInfo.initX + dx));
+          nw = right - nx;
+        }
+        if (h.includes('n')) {
+          const bottom = dragInfo.initY + dragInfo.initH;
+          ny = Math.max(0, Math.min(bottom - 0.05, dragInfo.initY + dy));
+          nh = bottom - ny;
+        }
+
+        reg.x = nx;
+        reg.y = ny;
+        reg.w = nw;
+        reg.h = nh;
+      }
+
+      updateCropBoxPositions();
+      hideFfmpegPreview();
+    }
+
+    function handleMouseUp() {
+      dragInfo = null;
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    }
+
+    cropStage.addEventListener('mousedown', handleMouseDown);
+
+    // Live 9:16 Canvas Compositor
+    function startCanvasLoop() {
+      function drawFrame() {
+        if (!state.layout) {
+          requestAnimationFrame(drawFrame);
+          return;
+        }
+
+        const cw = canvas.width;
+        const ch = canvas.height;
+
+        // 1. Draw Background
+        const bg = state.layout.background || { type: 'color', value: '#000000' };
+        if (bg.type === 'blur' && video.readyState >= 2) {
+          ctx.save();
+          ctx.filter = 'blur(16px) brightness(0.85)';
+          ctx.drawImage(video, 0, 0, cw, ch);
+          ctx.restore();
+        } else {
+          ctx.fillStyle = bg.value || '#000000';
+          ctx.fillRect(0, 0, cw, ch);
+        }
+
+        // 2. Draw Layers in order
+        if (video.readyState >= 2) {
+          const vW = video.videoWidth || state.srcW;
+          const vH = video.videoHeight || state.srcH;
+
+          const layers = state.layout.layers || [];
+          layers.forEach(lyr => {
+            const reg = state.layout.regions[lyr.region || lyr.id];
+            if (!reg) return;
+
+            const sx = reg.x * vW;
+            const sy = reg.y * vH;
+            const sw = reg.w * vW;
+            const sh = reg.h * vH;
+
+            const dx = lyr.x * cw;
+            const dy = lyr.y * ch;
+            const dw = lyr.w * cw;
+            const dh = lyr.h * ch;
+
+            ctx.save();
+
+            // Circular mask or rounded rect
+            if (lyr.shape === 'circle') {
+              const cx = dx + dw / 2;
+              const cy = dy + dh / 2;
+              const r = Math.min(dw, dh) / 2;
+              ctx.beginPath();
+              ctx.arc(cx, cy, r, 0, Math.PI * 2);
+              ctx.clip();
+            } else if (lyr.radius && lyr.radius > 0) {
+              const r = lyr.radius * (cw / 360);
+              ctx.beginPath();
+              ctx.roundRect(dx, dy, dw, dh, r);
+              ctx.clip();
+            }
+
+            // The exporter fills each panel and crops the excess from its center.
+            const scale = Math.max(dw / sw, dh / sh);
+            const width = dw / scale, height = dh / scale;
+            ctx.drawImage(video, sx + (sw - width) / 2, sy + (sh - height) / 2,
+                          width, height, dx, dy, dw, dh);
+
+            // Layer Border
+            if (lyr.border && lyr.border > 0) {
+              ctx.restore();
+              ctx.save();
+              ctx.strokeStyle = lyr.borderColor || '#00FF88';
+              ctx.lineWidth = lyr.border * (cw / 360);
+
+              if (lyr.shape === 'circle') {
+                const cx = dx + dw / 2;
+                const cy = dy + dh / 2;
+                const r = Math.min(dw, dh) / 2;
+                ctx.beginPath();
+                ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                ctx.stroke();
+              } else if (lyr.radius && lyr.radius > 0) {
+                const r = lyr.radius * (cw / 360);
+                ctx.beginPath();
+                ctx.roundRect(dx, dy, dw, dh, r);
+                ctx.stroke();
+              } else {
+                ctx.strokeRect(dx, dy, dw, dh);
+              }
+            }
+
+            ctx.restore();
+          });
+        }
+
+        // 3. Draw Hook text overlay
+        if (state.showHook && state.layout.hook && state.layout.hook.enabled !== false) {
+          const hy = state.layout.hook.y * ch;
+          ctx.save();
+          const hookText = "WAIT FOR IT";
+          ctx.font = 'bold 36px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          const tw = ctx.measureText(hookText).width;
+          ctx.fillStyle = '#000';
+          ctx.fillRect(cw / 2 - tw / 2 - 16, hy - 24, tw + 32, 48);
+          ctx.fillStyle = '#fff';
+          ctx.fillText(hookText, cw / 2, hy);
+          ctx.restore();
+        }
+
+        // 4. Draw Caption text overlay preview
+        if (state.showCaptions && state.layout.captions && state.layout.captions.enabled !== false) {
+          const cy = state.layout.captions.y * ch;
+          ctx.save();
+          ctx.font = '900 48px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.strokeStyle = '#000';
+          ctx.lineWidth = 8;
+          ctx.strokeText("THIS IS INSANE!", cw / 2, cy);
+          ctx.fillStyle = '#ffcc00';
+          ctx.fillText("THIS IS INSANE!", cw / 2, cy);
+          ctx.restore();
+        }
+
+        requestAnimationFrame(drawFrame);
+      }
+      requestAnimationFrame(drawFrame);
+    }
+
+    // Toggle FFmpeg preview
+    function hideFfmpegPreview() {
+      ffmpegImg.style.display = 'none';
+    }
+
+    document.getElementById('previewFrameBtn').onclick = async () => {
+      showToast('Rendering pixel-exact FFmpeg 9:16 frame...');
+      try {
+        const payload = {
+          ...state.layout,
+          t: video.currentTime || 60.0
+        };
+        const res = await fetch(`/api/layout-studio/${jobId}/preview`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.detail || 'Preview render failed.');
+        }
+        const blob = await res.blob();
+        ffmpegImg.src = URL.createObjectURL(blob);
+        ffmpegImg.style.display = 'block';
+        showToast('FFmpeg preview frame ready!');
+      } catch (e) {
+        showToast('Error: ' + e.message);
+      }
+    };
+
+    // Preset Switching
+    function applyPreset(presetKey) {
+      const preset = state.presets[presetKey];
+      if (!preset) return;
+
+      state.layout.preset = presetKey;
+      state.layout.layers = JSON.parse(JSON.stringify(preset.layers));
+      state.layout.hook = JSON.parse(JSON.stringify(preset.hook));
+      state.layout.captions = JSON.parse(JSON.stringify(preset.captions));
+      state.layout.background = JSON.parse(JSON.stringify(preset.background));
+
+      updateActivePresetPill(presetKey);
+      syncInspectorWithLayout();
+      hideFfmpegPreview();
+      showToast(`Applied preset: ${preset.name}`);
+    }
+
+    function updateActivePresetPill(presetKey) {
+      document.querySelectorAll('.preset-pill').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.preset === presetKey);
+      });
+      document.querySelectorAll('.template-card').forEach(c => {
+        c.classList.toggle('active', c.dataset.preset === presetKey);
+      });
+    }
+
+    document.getElementById('presetPills').addEventListener('click', e => {
+      const pill = e.target.closest('.preset-pill');
+      if (pill) applyPreset(pill.dataset.preset);
+    });
+
+    // Render Preset Cards in inspector tab
+    function renderPresetCards() {
+      const container = document.getElementById('presetCardsList');
+      container.innerHTML = '';
+      Object.keys(state.presets).forEach(key => {
+        const p = state.presets[key];
+        const card = document.createElement('div');
+        card.className = `template-card ${state.layout.preset === key ? 'active' : ''}`;
+        card.dataset.preset = key;
+        card.innerHTML = `<div><div class="tc-name">${p.name}</div><div class="tc-desc">${p.description}</div></div>`;
+        card.onclick = () => applyPreset(key);
+        container.appendChild(card);
+      });
+    }
+
+    // Render Template Cards
+    function renderTemplateCards() {
+      const container = document.getElementById('templateCardsList');
+      const customTemplates = state.templates.filter(t => !t.is_preset);
+      if (customTemplates.length === 0) {
+        container.innerHTML = '<div style="color:var(--text-muted);font-size:12px;font-style:italic;">No saved templates yet.</div>';
+        return;
+      }
+      container.innerHTML = '';
+      customTemplates.forEach(t => {
+        const card = document.createElement('div');
+        card.className = 'template-card';
+        card.innerHTML = `
+          <div><div class="tc-name"></div><div class="tc-desc"></div></div>
+          <button style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:14px;" title="Delete" type="button">✕</button>
+        `;
+        card.querySelector('.tc-name').textContent = t.name;
+        card.querySelector('.tc-desc').textContent = t.description;
+        card.querySelector('button').onclick = event => deleteTemplate(t.id, event);
+        card.onclick = () => {
+          if (t.data) {
+            state.layout = JSON.parse(JSON.stringify(t.data));
+            syncInspectorWithLayout();
+            updateCropBoxPositions();
+            showToast(`Loaded template: ${t.name}`);
+          }
+        };
+        container.appendChild(card);
+      });
+    }
+
+    async function promptSaveTemplate() {
+      const name = prompt("Enter a name for this custom template:");
+      if (!name || !name.trim()) return;
+
+      try {
+        const res = await fetch('/api/layout-studio/templates', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: name.trim(), layout: state.layout })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          showToast(`Saved template "${name}"!`);
+          const tRes = await fetch('/api/layout-studio/templates');
+          const tData = await tRes.json();
+          state.templates = tData.templates || [];
+          renderTemplateCards();
+        }
+      } catch (e) {
+        showToast('Error saving template: ' + e.message);
+      }
+    }
+
+    async function deleteTemplate(slug, e) {
+      e.stopPropagation();
+      if (!confirm("Delete this template?")) return;
+      try {
+        await fetch(`/api/layout-studio/templates/${slug}`, { method: 'DELETE' });
+        state.templates = state.templates.filter(t => t.id !== slug);
+        renderTemplateCards();
+        showToast('Template deleted.');
+      } catch (err) {
+        showToast('Error deleting template');
+      }
+    }
+
+    // Layer Inspector Sync
+    function selectLayer(layerId) {
+      state.activeLayerId = layerId;
+      syncLayerInspector();
+    }
+
+    function syncLayerInspector() {
+      const lyr = (state.layout.layers || []).find(l => l.id === state.activeLayerId);
+      if (!lyr) return;
+
+      document.getElementById('layerShape').value = lyr.shape || 'rectangle';
+      document.getElementById('layerFit').value = lyr.fit || 'cover';
+      document.getElementById('layerBorder').value = lyr.border || 0;
+      document.getElementById('layerBorderVal').textContent = `${lyr.border || 0}px`;
+      document.getElementById('layerBorderColor').value = lyr.borderColor || '#00FF88';
+      document.getElementById('layerRadius').value = lyr.radius || 0;
+      document.getElementById('layerRadiusVal').textContent = `${lyr.radius || 0}px`;
+
+      document.getElementById('layerYSlider').value = Math.round((lyr.y || 0) * 100);
+      document.getElementById('layerYVal').textContent = `${Math.round((lyr.y || 0) * 100)}%`;
+      document.getElementById('layerHSlider').value = Math.round((lyr.h || 0.35) * 100);
+      document.getElementById('layerHVal').textContent = `${Math.round((lyr.h || 0.35) * 100)}%`;
+      document.getElementById('layerXSlider').value = Math.round((lyr.x || 0) * 100);
+      document.getElementById('layerXVal').textContent = `${Math.round((lyr.x || 0) * 100)}%`;
+      document.getElementById('layerWSlider').value = Math.round((lyr.w || 1.0) * 100);
+      document.getElementById('layerWVal').textContent = `${Math.round((lyr.w || 1.0) * 100)}%`;
+    }
+
+    function updateLayerProp(prop, val) {
+      const lyr = (state.layout.layers || []).find(l => l.id === state.activeLayerId);
+      if (!lyr) return;
+      lyr[prop] = val;
+      syncLayerInspector();
+      hideFfmpegPreview();
+    }
+
+    function syncInspectorWithLayout() {
+      syncLayerInspector();
+
+      // Background
+      const bg = state.layout.background || { type: 'color', value: '#000000' };
+      document.getElementById('bgType').value = bg.type;
+      document.getElementById('bgColorInput').value = bg.value && bg.value.startsWith('#') ? bg.value : '#000000';
+      document.getElementById('bgColorRow').style.display = bg.type === 'color' ? 'flex' : 'none';
+
+      // Hook
+      const hk = state.layout.hook || { enabled: true, y: 0.37 };
+      document.getElementById('hookEnabled').checked = hk.enabled !== false;
+      document.getElementById('hookYSlider').value = Math.round((hk.y || 0.37) * 100);
+      document.getElementById('hookYVal').textContent = `${Math.round((hk.y || 0.37) * 100)}%`;
+
+      // Captions
+      const cp = state.layout.captions || { enabled: true, y: 0.80 };
+      document.getElementById('captionsEnabled').checked = cp.enabled !== false;
+      document.getElementById('captionsYSlider').value = Math.round((cp.y || 0.80) * 100);
+      document.getElementById('captionsYVal').textContent = `${Math.round((cp.y || 0.80) * 100)}%`;
+
+      // Quality
+      const q = (state.layout.output || {}).quality || 720;
+      document.getElementById('qualitySelect').value = q.toString();
+    }
+
+    function updateBgType(val) {
+      state.layout.background = state.layout.background || {};
+      state.layout.background.type = val;
+      document.getElementById('bgColorRow').style.display = val === 'color' ? 'flex' : 'none';
+      hideFfmpegPreview();
+    }
+
+    function updateBgColor(val) {
+      state.layout.background = state.layout.background || {};
+      state.layout.background.value = val;
+      hideFfmpegPreview();
+    }
+
+    function updateHook(prop, val) {
+      state.layout.hook = state.layout.hook || {};
+      state.layout.hook[prop] = val;
+      document.getElementById('hookYVal').textContent = `${Math.round((state.layout.hook.y || 0.37) * 100)}%`;
+      hideFfmpegPreview();
+    }
+
+    function updateCaptions(prop, val) {
+      state.layout.captions = state.layout.captions || {};
+      state.layout.captions[prop] = val;
+      document.getElementById('captionsYVal').textContent = `${Math.round((state.layout.captions.y || 0.80) * 100)}%`;
+      hideFfmpegPreview();
+    }
+
+    function updateQuality(val) {
+      state.layout.output = state.layout.output || {};
+      state.layout.output.quality = parseInt(val);
+      state.layout.output.width = val === '1080' ? 1080 : 720;
+      state.layout.output.height = val === '1080' ? 1920 : 1280;
+    }
+
+    function toggleSafeZone(checked) {
+      document.getElementById('safeZoneOverlay').classList.toggle('active', checked);
+    }
+
+    function toggleHook(checked) {
+      state.showHook = checked;
+    }
+
+    function toggleCaptions(checked) {
+      state.showCaptions = checked;
+    }
+
+    // Playback and Timeline
+    function togglePlay() {
+      if (video.paused) {
+        video.play();
+        document.getElementById('playBtn').textContent = '⏸';
+      } else {
+        video.pause();
+        document.getElementById('playBtn').textContent = '▶';
+      }
+    }
+
+    function stepTime(sec) {
+      video.currentTime = Math.max(0, Math.min(video.duration || state.duration, video.currentTime + sec));
+    }
+
+    function seekTimeline(e) {
+      const track = document.getElementById('timelineTrack');
+      const rect = track.getBoundingClientRect();
+      const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      video.currentTime = pct * (video.duration || state.duration);
+    }
+
+    function updateTimeline() {
+      const cur = video.currentTime || 0;
+      const dur = video.duration || state.duration || 1;
+      const pct = (cur / dur) * 100;
+      document.getElementById('timelineProgress').style.width = `${pct}%`;
+      document.getElementById('currentTimeLabel').textContent = formatTime(cur);
+    }
+
+    function renderClipMarkers() {
+      const container = document.getElementById('clipMarkersContainer');
+      container.innerHTML = '';
+      const dur = video.duration || state.duration || 1;
+      state.clips.forEach(clip => {
+        const startPct = (clip.start / dur) * 100;
+        const widthPct = ((clip.end - clip.start) / dur) * 100;
+        const marker = document.createElement('div');
+        marker.className = 'clip-marker';
+        marker.style.left = `${startPct}%`;
+        marker.style.width = `${widthPct}%`;
+        marker.title = `${clip.title || clip.hook || 'Clip'}: ${formatTime(clip.start)} - ${formatTime(clip.end)}`;
+        container.appendChild(marker);
+      });
+    }
+
+    // Save & Generate Actions
+    document.getElementById('saveLayoutBtn').onclick = async () => {
+      if (isDraft) {
+        if (!video.videoWidth || !state.layout) return showToast("Wait for the preview to load first.");
+        draft?.save?.(state.layout);
+        try {
+          if (draft?.source?.key) {
+            localStorage.setItem("peakcut_saved_layout_" + draft.source.key, JSON.stringify(state.layout));
+          }
+          localStorage.setItem("peakcut_saved_layout_", JSON.stringify(state.layout));
+        } catch (e) {}
+        showToast("Layout applied! Returning to app...", "ok");
+        setTimeout(() => {
+          if (window.opener) {
+            try { window.close(); return; } catch (e) {}
+          }
+          if (window.history.length > 1 && document.referrer && document.referrer.includes(window.location.host)) {
+            window.history.back();
+          } else {
+            window.location.href = "/app";
+          }
+        }, 400);
+        return;
+      }
+      try {
+        const res = await fetch(`/api/layout-studio/${jobId}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(state.layout)
+        });
+        const data = await res.json();
+        if (data.ok) {
+          showToast('Layout configuration saved successfully!');
+        } else {
+          showToast('Failed to save layout.');
+        }
+      } catch (err) {
+        showToast('Error saving layout: ' + err.message);
+      }
+    };
+
+    document.getElementById('generateClipsBtn').onclick = async () => {
+      if (!confirm("Generate / re-render clips using this manual layout?")) return;
+      showToast('Queueing clip rendering with manual layout...');
+      try {
+        const res = await fetch(`/api/layout-studio/${jobId}/generate`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(state.layout)
+        });
+        const data = await res.json();
+        if (data.ok) {
+          showToast(`Queued ${data.queued_clips.length} clip(s).`);
+          setTimeout(() => {
+            window.location.href = '/app/videos';
+          }, 1200);
+        } else {
+          showToast(data.detail || 'Could not queue the clips.');
+        }
+      } catch (e) {
+        showToast('Error generating clips: ' + e.message);
+      }
+    };
+
+    // Toast Notification helper
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Start on load
+    window.onload = initStudio;
+  </script>
+</body>
+</html>

@@ -1,0 +1,2121 @@
+@tailwind utilities;
+
+/* Base HTML resets since preflight is false */
+button, input, select, textarea {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+button {
+  cursor: pointer;
+}
+
+:root:root {
+  --brand-press:#b9e800; --brand-ink:#191b18;
+  --brand-soft:#f0f2ee; --brand-line:#ccd0c9; --brand-deep:#384035;
+  --frame:#202421; --frame-2:#333934; --frame-line:#444944; --frame-text:#fafbf9; --frame-dim:#bec4bd;
+  --bg:#fff; --text:#181b19; --dim:#565e58; --faint:#626b63; --muted:#f1f3f0;
+  --line:#dbe0da; --line-2:#c8cec8;
+  --glass:rgba(255,255,255,.84); --glass-edge:rgba(70,83,71,.16);
+}
+body[data-studio]{font-family:Inter,"Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body[data-studio] :focus-visible{outline:2px solid #ccff00;outline-offset:3px}
+body[data-studio] ::selection{color:#121910;background:#ccff00}
+body[data-studio=index]{background:#000000;color:#f5f5f5}
+body[data-studio=index] #main{background:transparent;border:0;border-radius:0}
+body[data-studio] :is(.topbar,header.nav,header:has(.bar)){background:transparent;backdrop-filter:none;border-bottom:1px solid rgba(255,255,255,.08)}
+body[data-studio] .topbar{min-height:56px;padding-inline:clamp(18px,3vw,44px)}
+body[data-studio] .topbar h1{font-size:clamp(18px,1.7vw,27px);letter-spacing:-.045em;font-weight:680;color:#fff}
+body[data-studio=index] .side{display:none !important}
+body[data-studio=index] .side-head{padding:12px 8px 28px}
+body[data-studio] .nav-item{min-height:42px;border-radius:10px}
+body[data-studio] .nav-item.on{background:#dfe4df;color:#151b16}
+body[data-studio] .nav-item.on:before{content:"";width:3px;border-radius:3px;background:#627326;height:16px}
+body[data-studio] .nav-item:hover{background:#e4e9e4}
+body[data-studio] .avatar:not(img){background:#d9dfda;color:#273127}
+body[data-studio] :is(.card,.tile,.clip,.set-nav,.set-sec,.composer,.pop,.dlg){background:var(--glass);border-color:var(--glass-edge);border-radius:14px}
+body[data-studio] :is(.pop,dialog[open],.composer){backdrop-filter:blur(18px)}
+body[data-studio] .btn.primary,body[data-studio] .btn-primary{background:var(--signal);color:var(--on-brand);border-color:transparent;box-shadow:none}
+body[data-studio] .btn.primary:hover,body[data-studio] .btn-primary:hover{background:#bde900}
+body[data-studio] .btn:not(.primary):not(.danger):not(.btn-primary):hover{border-color:#9aa49c}
+body[data-studio=index] .hero{margin:clamp(12px,2.7vw,40px);padding:clamp(24px,4vw,64px);text-align:left;border:1px solid var(--glass-edge);border-radius:20px;background:linear-gradient(117deg,#fff 12%,#edf1ec 70%,#e0e5df);isolation:isolate}
+body[data-studio=index] .hero h2{font-size:clamp(30px,4.3vw,66px);line-height:1.06;letter-spacing:-.065em;max-width:15ch}
+body[data-studio=index] .hero>p{margin:14px 0 24px;text-align:left}
+body[data-studio=index] .hero .ga-bg{inset:0;overflow:hidden;opacity:.32;pointer-events:none}
+body[data-studio=index] .hero .composer{margin-inline:0;background:transparent}
+body[data-studio=index] .sc-strip{display:grid;grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:clamp(205px,20vw,290px);overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;gap:18px;padding:2px 2px 10px;scrollbar-width:thin}
+.sc-strip>*{scroll-snap-align:start}
+.sc-strip-controls{margin:4px 0 8px}.sc-strip-controls button{cursor:pointer;min-width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--glass);font-size:24px;line-height:1}
+.sc-strip-controls button:hover{background:#e7ece6}.sc-strip-controls:has(+.sc-strip>.clip:only-child){display:none}
+body[data-studio=index] :is(.clip, .sc-clip){background:rgba(22, 24, 30, 0.9);border:1px solid rgba(255,255,255,0.12);border-radius:16px;overflow:hidden;color:#ffffff}
+.sc-clip .shot{aspect-ratio:9/16}.sc-clip .badge.r{background:#202420ed;color:white}.sc-clip .badge.l{background:#fffffff0;color:#263027}
+.sc-clip .clip-body{padding:14px;gap:6px}.sc-clip .hook{font-size:16px;line-height:1.22;letter-spacing:-.025em;color:#ccff00}
+.sc-clip .ttl{color:#ffffff}
+.sc-destination{font-size:12px;padding:7px 0;border-top:1px solid rgba(255,255,255,0.12);display:grid;gap:4px;min-width:0;color:#ffffff}
+.sc-destination>a,.sc-destination>div{display:flex;align-items:baseline;justify-content:space-between;gap:6px;text-decoration:none;color:#ffffff;flex-wrap:wrap}
+.sc-destination strong{overflow-wrap:anywhere;color:#ffffff}.sc-destination span{color:rgba(255,255,255,0.8)}.sc-destination[data-state=posted] span{color:#4ade80;font-weight:600}.sc-destination[data-state=posting] span{color:#60a5fa;font-weight:600}.sc-destination[data-state=scheduled] span{color:#facc15;font-weight:600}.sc-destination[data-state=failed] span,.sc-destination small{color:#f87171}.sc-destination button{justify-self:start}
+body[data-studio=landing] .hero-top{background:linear-gradient(180deg,#fcfdfc,#edf0ed);border-bottom:1px solid var(--line)}
+body[data-studio=landing] .hero h1{letter-spacing:-.068em}.hl,body[data-studio=landing] :is(.hl,.kicker){color:#454d46}
+body[data-studio=landing] .reel{background:#f4f6f3;border-block:1px solid var(--line)}
+body:is([data-studio=auth],[data-studio=reset]) .main,body[data-studio=legal]{background:linear-gradient(115deg,#f7f9f6,#e7ebe6)}
+body:is([data-studio=auth],[data-studio=reset]) .side{background:linear-gradient(145deg,#18201c,#303832);color:#f1f6f0}
+body:is([data-studio=auth],[data-studio=reset]) .card{padding:clamp(18px,3vw,42px);border:1px solid var(--glass-edge);backdrop-filter:blur(20px)}
+body[data-studio=layout_studio]{--bg-base:#111512;--bg-surface:#191e1b;--bg-panel:#232a26;--bg-card:#2b332e;--bg-card-hover:#353f38;--primary:#ccff00;--primary-hover:#bbdf24;--primary-glow:transparent;--text:#f4f6f3;--text-dim:#c5ccc5;--text-muted:#a3ada5;--border:#414a43}
+body[data-studio=layout_studio] header{background:rgba(27,34,29,.86);backdrop-filter:blur(18px)}
+body[data-studio=layout_studio] .workspace{background:#101512;gap:6px;padding:6px}
+body[data-studio=layout_studio] .col{border:1px solid var(--border);border-radius:12px}
+body[data-studio=layout_studio] .header-center{overflow-x:auto}
+@media(max-width:1000px){body[data-studio=layout_studio]{overflow:auto;height:auto;min-height:100vh}body[data-studio=layout_studio] header{flex-wrap:wrap;height:auto;gap:8px;padding:10px}body[data-studio=layout_studio] .header-center{order:3;flex:1 0 100%;justify-content:flex-start}body[data-studio=layout_studio] .workspace{grid-template-columns:minmax(0,1fr);overflow:visible}body[data-studio=layout_studio] .col{min-height:340px}body[data-studio=layout_studio] .header-right{flex-wrap:wrap}}
+@media(max-width:760px){body[data-studio] .side{background:#f1f4f0}body[data-studio=index] #main{margin:0;border:none;border-radius:0;height:100dvh}body[data-studio=index] .sc-strip{grid-auto-columns:min(79vw,285px)}body[data-studio] .topbar{min-height:56px}body[data-studio=index] .hero{padding:24px 16px}.clip-foot :is(button,a,label){min-height:44px}}
+@media(prefers-reduced-motion:no-preference){dialog[open]{animation:studio-sheet-in 180ms ease-out}@keyframes studio-sheet-in{from{opacity:.4;transform:translateY(10px)}to{opacity:1;transform:none}}}
+@media(prefers-reduced-motion:reduce){body[data-studio] *,body[data-studio] *::before,body[data-studio] *::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+@media(forced-colors:active){.sc-destination span,.sc-strip-controls button{border:1px solid ButtonText}}
+:root:root{--brand-hi:#bde900;--soft:#eff2ef;--line-b:#d1d8d0;--deep:#364336;--ink:#171b18}
+body[data-studio=index] .sc-recent h3{font-size:13px;margin:0 0 8px;letter-spacing:.01em;color:#444e46}
+.sc-frames{display:flex;gap:8px}.sc-frames button{position:relative;overflow:hidden;border:0;border-radius:10px;padding:0;aspect-ratio:9/16;min-width:0;flex:1;background:#202420;cursor:pointer}.sc-frames img{width:100%;height:100%;object-fit:cover;display:block}.sc-frames span{position:absolute;inset:auto 0 0;padding:18px 7px 7px;background:linear-gradient(transparent,#101410df);color:#fff;text-align:left;font:600 11px/1.2 var(--font)}
+#recentPreviews:empty{display:none}
+@media(min-width:1100px){body[data-studio=index] .hero:has(.sc-recent){padding-right:40%}body[data-studio=index] .hero>#recentPreviews{position:absolute;right:3%;top:50%;width:31%;transform:translateY(-50%)}}
+@media(max-width:1099px){body[data-studio=index] #recentPreviews:not(:empty){margin-top:20px}.sc-frames{max-width:320px}.sc-frames button{aspect-ratio:1}}
+body[data-studio] .tile>i{background:#edf0ed;color:#465149}
+body[data-studio] .side .plans-btn{background:#202621;color:white}
+body[data-studio] .side .count{background:#dce1dc}
+body[data-studio=landing] footer.site .fbrand a.fcta{background:var(--signal);color:#192000}
+body[data-studio=landing] footer.site ul a:hover{color:#eef4ed}
+body:is([data-studio=auth],[data-studio=reset]) .side :is(em,svg){color:#d9e0d8}
+@media(prefers-reduced-motion:reduce){.ga-bg{display:none}}
+stan-clip-scroll{display:block}stan-clip-scroll[hidden]{display:none}.sc-strip-controls button:disabled{opacity:.4;cursor:default}
+
+@media(min-width:901px){
+  body[data-studio=index] .topbar{position:relative;max-width:1600px;margin:auto;padding:28px clamp(24px,4vw,72px) 16px;background:transparent;border:0}
+  body[data-studio=index] .topbar h1{font-size:clamp(30px,3vw,48px)}
+  body[data-studio=index] #view{width:100%;max-width:1600px;margin:auto;padding-inline:clamp(24px,4vw,72px)}
+  body[data-studio=index] .job:has(>.sc-strip){display:grid;grid-template-columns:minmax(160px,18%) minmax(0,1fr);column-gap:28px;align-items:start;border-top:1px solid rgba(255,255,255,0.1);padding-top:18px}
+  body[data-studio=index] .job:has(>.sc-strip)>.job-head{grid-column:1;grid-row:1 / span 4;display:grid;gap:14px}
+  body[data-studio=index] .job:has(>.sc-strip)>.job-head .jt{display:grid;gap:12px}
+  body[data-studio=index] .job:has(>.sc-strip)>.job-head .jthumb{width:100%;height:auto;aspect-ratio:16/9}
+  body[data-studio=index] .job:has(>.sc-strip)>:not(.job-head){grid-column:2}
+  body[data-studio=index] .set-layout{grid-template-columns:minmax(0,1fr);max-width:1080px;margin-inline:auto}
+  body[data-studio=index] .set-nav{position:static;display:flex;flex-direction:row;flex-wrap:wrap;width:auto;gap:var(--s1)}
+  body[data-studio=index] .set-link{flex:1 1 120px}
+}
+@media(min-width:1001px){
+  body[data-studio=layout_studio] .workspace{grid-template-columns:minmax(215px,.75fr) minmax(0,1.8fr) minmax(0,1fr);padding:12px;gap:10px}
+  body[data-studio=layout_studio] .workspace>.inspector{grid-column:1;grid-row:1}
+  body[data-studio=layout_studio] .workspace>.col:first-child{grid-column:2;grid-row:1}
+  body[data-studio=layout_studio] .workspace>.col:nth-child(2){grid-column:3;grid-row:1}
+  body[data-studio=landing] .hero{display:grid;grid-template-columns:1.05fr 1fr;align-items:center;padding:clamp(32px,5vw,88px) 5%;gap:12px 4%;background:#f1f4ef}
+  body[data-studio=landing] .hero-top{grid-row:1 / span 2;text-align:left;background:none;border:0}
+  body[data-studio=landing] .hero-copy{text-align:left;padding:0}
+  body[data-studio=landing] .hero .reel{align-self:end;background:transparent;border:0;width:100%;padding:0;margin:0}
+  body[data-studio=landing] .reel-note{grid-column:2;align-self:start}
+  body:is([data-studio=auth],[data-studio=reset]) .side{order:2}
+  body:is([data-studio=auth],[data-studio=reset]) .main{order:1}
+}
+
+body[data-studio=index] #heroSlot .hero{display:grid;justify-items:center;gap:20px;padding:clamp(24px,4vw,56px) clamp(14px,3vw,40px);text-align:center}
+#heroSlot .intake-heading{position:relative}
+body[data-studio=index] #heroSlot h1{color:#171b18;font-size:clamp(30px,4.3vw,66px);letter-spacing:-.065em;margin:0 auto;max-width:18ch;text-wrap:balance;line-height:1.02}
+#heroSlot .intake-heading p{margin:12px auto 0;color:#475249}
+#heroSlot #add,#heroSlot #recentPreviews{width:min(100%,832px);min-width:0}
+body[data-studio=index] #heroSlot #recentPreviews{position:static;transform:none;margin:0}
+#heroSlot .sc-frames{max-width:none}
+#heroSlot .sc-frames button{aspect-ratio:2.5}
+#ov{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;align-items:start}
+#ov>*{margin:0;min-width:0}
+.production-counts{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));overflow:hidden;border-radius:18px;background:#242c28;color:#f6f8f4}
+.production-counts div{padding:18px clamp(12px,2vw,28px);border-inline-start:1px solid #47504a}
+.production-counts dt{font-size:13px;color:#cdd6ce}
+.production-counts dd{margin:5px 0 0;font-size:clamp(26px,3vw,42px);line-height:1;font-variant-numeric:tabular-nums}
+.failed-total{color:#943d39}
+.publishing-panel .queue-feed{padding:0;margin:0;gap:0;list-style:none}
+.queue-feed li{padding:15px 0;border-top:1px solid #d1d8d1;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:5px 12px;align-items:center}
+.queue-feed li>div:first-child{min-width:0;overflow-wrap:anywhere}
+.queue-feed small{display:block;color:#536056;margin-top:4px}
+.queue-feed .err{grid-column:1/-1}
+.queue-feed .btn{justify-self:start}
+@media(min-width:1150px){#ov:has(.ai-home){grid-template-columns:minmax(0,1fr) minmax(210px,.45fr)}}
+@media(max-width:600px){.production-counts{grid-template-columns:repeat(2,minmax(0,1fr))}.publishing-panel .card-head{flex-wrap:wrap}.queue-feed li{grid-template-columns:1fr;justify-items:start}}
+@media(min-width:901px){
+  body[data-studio=index] .editor{grid-template-columns:minmax(300px,450px) minmax(240px,340px)}
+  body[data-studio=index] .editor>.stage{grid-column:2;grid-row:1}
+  body[data-studio=index] .editor>.stage+*{grid-column:1;grid-row:1}
+  body[data-studio=legal]{display:grid;grid-template-columns:minmax(180px,22%) minmax(0,1fr);align-items:start}
+  body[data-studio=legal]>header{position:sticky;top:0;grid-column:1;border:0}
+  body[data-studio=legal]>header .bar,body[data-studio=legal]>header nav{display:flex;flex-direction:column;align-items:flex-start;gap:18px}
+  body[data-studio=legal]>header .bar{height:auto;padding:36px 24px}
+  body[data-studio=legal]>main{grid-column:2;width:100%;padding-inline:clamp(24px,4vw,72px)}
+  body[data-studio=legal]>footer{grid-column:1/-1}
+}
+body[data-studio=index] #app .side{padding:8px;gap:8px;background:#000;color:#f5f5f5;backdrop-filter:none;--frame-text:#f5f5f5;--frame-dim:#bababa;--frame-2:#191919;--frame-line:#292929}
+body[data-studio=index] #nav{flex:1;min-height:0}
+#nav .gn-scope,#nav .gn-sidebar{height:100%;width:100%;min-height:0;max-height:none}
+#nav .gn-scope{color-scheme:dark;--gn-card:#000;--gn-ink:#f5f5f5;--gn-muted:#bababa;--gn-line:#373737;--gn-selection:#292929;--gn-ring:#ccff00}
+#nav .gn-sidebar-surface{display:none}
+#nav .gn-sidebar-selection{background:#232323;box-shadow:none}
+#nav .gn-sidebar-search input{background:transparent;color:inherit}
+#nav .gn-sidebar :is(a,button):hover{background:#1a1a1a}
+body[data-studio=index] #foot .ai-card:not(:hover):not(.on){background:transparent}
+#nav .studio-nav-badge{margin-inline-start:auto;font-size:11px;white-space:nowrap}
+body[data-studio=index] .side-foot{padding-top:4px}
+#nav .lucide{fill:none;stroke:currentColor}
+
+#app[data-page=overview] .topbar{display:none}
+#app[data-page=overview] #heroSlot{
+  min-height:100%;display:grid;align-content:center;justify-items:center;
+  padding:clamp(16px,3vw,48px);box-sizing:border-box;
+}
+#app[data-page=overview] #heroSlot .hero{margin:0;width:min(100%,1040px);min-width:0;grid-template-columns:minmax(0,1fr)}
+#app[data-page=overview] #view{width:min(100%,1136px);margin-inline:auto}
+@media(max-width:900px){
+  #app[data-page=overview] .topbar{display:flex;min-height:0;height:0;padding:0;border:0;overflow:visible}
+  #app[data-page=overview] .topbar>:not(#menuBtn){display:none}
+  #app[data-page=overview] #menuBtn{position:absolute;top:8px;left:8px;background:var(--glass)}
+  #app[data-page=overview] #heroSlot{padding-block:54px}
+  #app[data-page=overview] #vbanner:not(:empty){padding-top:48px}
+}
+
+/* Dark glass styling for All Videos & Library Jobs */
+body[data-studio=index] .job,
+#app[data-page=library] .job {
+  background: rgba(18, 20, 26, 0.72) !important;
+  backdrop-filter: blur(24px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(140%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 20px !important;
+  padding: 20px 24px !important;
+  margin: 0 0 20px 0 !important;
+  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  color: #f5f5f5 !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+body[data-studio=index] .job:hover,
+#app[data-page=library] .job:hover {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+body[data-studio=index] .job>.job-head,
+#app[data-page=library] .job>.job-head {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  margin: 0 !important;
+  flex-wrap: nowrap !important;
+}
+
+body[data-studio=index] .job-head .jt,
+#app[data-page=library] .job-head .jt {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 18px !important;
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
+  padding-right: 0 !important;
+}
+
+/* Reduced, modern video thumbnail placeholder */
+body[data-studio=index] .job .jthumb,
+#app[data-page=library] .job .jthumb {
+  width: 210px !important;
+  max-width: 220px !important;
+  min-width: 160px !important;
+  height: auto !important;
+  aspect-ratio: 16 / 9 !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  flex: none !important;
+  background: #111418 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important;
+  position: relative !important;
+}
+body[data-studio=index] .job .jthumb img,
+#app[data-page=library] .job .jthumb img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+body[data-studio=index] .jthumb .du,
+#app[data-page=library] .jthumb .du {
+  position: absolute !important;
+  right: 6px !important;
+  bottom: 6px !important;
+  background: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+  color: #ffffff !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Card Typography */
+body[data-studio=index] .job-head h3,
+#app[data-page=library] .job-head h3 {
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  margin: 0 0 6px 0 !important;
+  line-height: 1.35 !important;
+  letter-spacing: -0.015em !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+}
+body[data-studio=index] .job .sub,
+body[data-studio=index] .job-head .sub,
+#app[data-page=library] .job-head .sub {
+  font-size: 13px !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+  margin: 0 !important;
+  line-height: 1.4 !important;
+}
+
+/* Action Controls */
+body[data-studio=index] .job button[data-act="canceljob"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  background: rgba(239, 68, 68, 0.12) !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+  color: #ff6b6b !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  padding: 7px 16px !important;
+  border-radius: 999px !important;
+  cursor: pointer !important;
+  transition: all 0.18s ease !important;
+  white-space: nowrap !important;
+}
+body[data-studio=index] .job button[data-act="canceljob"]:hover {
+  background: rgba(239, 68, 68, 0.25) !important;
+  border-color: rgba(239, 68, 68, 0.5) !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+}
+body[data-studio=index] .job button[data-act="canceljob"] svg {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+body[data-studio=index] .job button.btn.icon.ghost,
+#app[data-page=library] .job button.btn.icon.ghost {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+body[data-studio=index] .job button.btn.icon.ghost:hover,
+#app[data-page=library] .job button.btn.icon.ghost:hover {
+  background: rgba(255, 255, 255, 0.16) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Progress Bar & Stage Indicator */
+body[data-studio=index] .job .bar {
+  height: 8px !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 999px !important;
+  overflow: hidden !important;
+  margin: 16px 0 8px 0 !important;
+  position: relative !important;
+}
+body[data-studio=index] .job .bar i {
+  display: block !important;
+  height: 100% !important;
+  background: linear-gradient(90deg, #a3e635, #ccff00) !important;
+  border-radius: 999px !important;
+  box-shadow: 0 0 14px rgba(204, 255, 0, 0.5) !important;
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+body[data-studio=index] .job>.bar + .sub {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #ccff00 !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* Source Drawer & Toggle */
+.source-toggle {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  z-index: 1;
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: right;
+  padding-right: 8px;
+}
+.source-toggle span {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  font: 600 18px/1 system-ui;
+  transition: all 0.2s ease;
+}
+.source-toggle:hover span {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+.source-toggle[aria-expanded=true] span {
+  transform: rotate(180deg);
+  background: #ccff00;
+  color: #000000;
+}
+.source-toggle:focus-visible {
+  outline: 2px solid #ccff00;
+  outline-offset: 3px;
+}
+.source-drawer {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+  transition: grid-template-rows .26s ease, opacity .2s ease, visibility 0s .26s;
+}
+.source-drawer>div {
+  min-height: 0;
+  overflow: hidden;
+}
+.source-drawer:not([inert]) {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+.source-tray {
+  padding-top: 18px;
+  margin-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: #f5f5f5;
+}
+.live-disclosure {
+  position: relative;
+  padding: 12px 40px 12px 0;
+}
+@media(prefers-reduced-motion:reduce){.source-drawer{transition:none}}
+
+/* The fixed backdrop is a sibling of the workspace and its navigation. */
+#pageBackdrop{
+  position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;
+  background-color:var(--stage);
+  background-image:linear-gradient(135deg,transparent 25%,rgba(0,0,0,.18));
+}
+#pageBackdrop[data-page=library]{background-color:var(--stage)}
+#pageBackdrop[data-page=creator]{background-color:var(--frame)}
+#pageBackdrop[data-page=usage]{background-color:var(--frame-2)}
+#pageBackdrop[data-page=settings]{background-color:var(--brand-ink)}
+#homeBackdrop{position:absolute;inset:0;opacity:0}
+#pageBackdrop[data-page=overview] #homeBackdrop{opacity:1}
+#homeBackdrop .home-wave-mesh{width:100%;height:100%}
+@media(prefers-reduced-motion:no-preference){
+  #pageBackdrop{transition:background-color 240ms ease-in-out}
+  #homeBackdrop{transition:opacity 240ms ease-in-out}
+}
+
+@media(prefers-reduced-motion:reduce){
+  #pageBackdrop,#homeBackdrop{transition:none!important}
+}
+
+/* -------------------------------------------------- Global Layout & Viewport */
+body[data-studio=index] {
+  background: #000000 !important;
+  color: #f5f5f5;
+  overflow: hidden;
+}
+body[data-studio=index] .app,
+body[data-studio=index] #app {
+  display: block !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: transparent !important;
+  position: relative !important;
+  z-index: 10 !important;
+  grid-template-columns: none !important;
+}
+body[data-studio=index] .side {
+  display: none !important;
+}
+body[data-studio=index] main,
+body[data-studio=index] #main {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  box-sizing: border-box !important;
+  padding-left: clamp(16px,4vw,64px) !important;
+  padding-right: clamp(16px,4vw,64px) !important;
+  padding-top: calc(88px + env(safe-area-inset-top)) !important;
+  padding-bottom: 24px !important;
+  overflow-y: auto !important;
+  /* scrollbar */
+}
+
+/* Global navigation shares one translucent surface with the brand. */
+.floating-sidebar-container{position:fixed;top:max(16px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);width:min(1120px,calc(100% - 48px));z-index:45}
+.nav-destinations{grid-column:2;display:flex;align-items:center;justify-content:center;gap:14px}
+.nav-end{grid-column:3;display:flex;align-items:center;justify-self:end}
+.floating-sidebar{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:rgba(22,24,28,.33);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.stan-brand-float{display:flex;align-items:center;gap:10px;justify-self:start;padding:0 12px;min-height:44px;text-decoration:none;color:white;white-space:nowrap;font-weight:700;letter-spacing:-.025em}
+.stan-brand-icon{width:32px;height:32px;object-fit:contain;border-radius:22%;flex:none}
+.floating-nav-btn{position:relative;display:flex;align-items:center;justify-content:center;gap:8px;min-width:44px;height:44px;padding:0 13px;border-radius:999px;background:transparent;border:1px solid transparent;color:#d7d9d7;cursor:pointer;font-size:14px;white-space:nowrap}
+.floating-nav-btn svg{width:18px;height:18px}
+@media(max-width:760px){
+  .floating-sidebar-container{width:calc(100% - 16px);top:max(8px,env(safe-area-inset-top))}
+  .floating-sidebar{padding:4px}
+  .nav-destinations{gap:0}
+  .floating-nav-btn{padding:0}
+  .nav-caption{display:none}
+  .stan-brand-float{margin:0;padding:0 6px}
+}
+@media(min-width:761px) and (max-width:960px){.floating-nav-btn{padding:0 8px}.stan-brand-text{display:none}}
+@media(max-width:530px){.stan-brand-text{display:none}.stan-brand-float{justify-content:center;min-width:44px}}
+@media(max-width:350px){.floating-sidebar-container{width:calc(100% - 4px)}.floating-sidebar{padding-inline:2px}}
+.floating-nav-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+.floating-nav-btn.active {
+  background:var(--frame-2);color:var(--on-stage);border-color:var(--frame-line);
+}
+.floating-nav-btn.active::after{
+  content:"";position:absolute;bottom:4px;width:4px;height:4px;border-radius:50%;background:var(--signal)
+}
+.floating-tooltip{display:none}
+@media(max-width:760px) and (hover:hover){
+  .group:is(:hover,:focus-within)>.floating-tooltip{position:absolute;display:block;top:100%;background:var(--frame);color:white;white-space:nowrap;padding:4px 8px;border-radius:8px;font-size:12px}
+}
+.floating-flyout-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 12px);
+  min-width: 210px;
+  background: rgba(18, 20, 26, 0.94);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+  z-index: 70;
+}
+
+/* -------------------------------------------------- Overview Hero & Recent Clips Centering */
+#app[data-page=overview] .topbar {
+  display: none !important;
+}
+#app[data-page=overview] #main {
+  overflow-y:auto !important;
+}
+#main::-webkit-scrollbar {
+  width: 6px;
+}
+#main::-webkit-scrollbar-track {
+  background: transparent;
+}
+#main::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+}
+#main::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+#app[data-page=overview] #heroSlot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100dvh - 112px - env(safe-area-inset-top));
+  box-sizing: border-box;
+}
+#app[data-page=overview] #heroSlot .hero {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  text-align: center;
+  box-sizing: border-box;
+}
+#heroSlot .edit-mark{display:flex;justify-content:center;align-items:center;gap:10px;margin-bottom:16px;color:var(--signal)}
+#heroSlot .edit-mark svg{width:18px;height:18px}
+#heroSlot .edit-mark span{height:1px;width:32px;background:currentColor;opacity:.45}
+#app[data-page=overview] #heroSlot .hero h1 {
+  max-width:none;margin:0 auto;color:var(--on-stage);
+  font:400 clamp(36px,5vw,76px)/1.03 Georgia,"Times New Roman",serif;
+  letter-spacing:-.045em;
+}
+#heroSlot .intake-heading em{font-weight:400;color:var(--signal)}
+#app[data-page=overview] #heroSlot .intake-heading p {
+  max-width:48ch;margin:16px auto 12px;text-wrap:balance;
+  font-size:clamp(15px,1.2vw,18px);line-height:1.5;color:#d2d6dc;
+}
+#app[data-page=overview] #heroSlot .sc-recent {
+  margin-top: 32px;
+  text-align: left;
+}
+#app[data-page=overview] #heroSlot .sc-recent h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 14px;
+  text-align: center;
+}
+#app[data-page=overview] #heroSlot .sc-frames {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+#app[data-page=overview] #heroSlot .sc-frames button {
+  width: 240px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  text-align: left;
+}
+#app[data-page=overview] #heroSlot .sc-frames button:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+#app[data-page=overview] #heroSlot .sc-frames img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  display: block;
+}
+#app[data-page=overview] #heroSlot .sc-frames span {
+  display: block;
+  padding: 8px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* -------------------------------------------------- Other Pages Theme Consistency */
+body[data-studio=index] .topbar {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  padding-left: 0 !important;
+  transition: background 0.2s ease, backdrop-filter 0.2s ease, border-color 0.2s ease !important;
+}
+body[data-studio=index] .topbar.stuck {
+  background: rgba(10, 12, 16, 0.88) !important;
+  backdrop-filter: blur(24px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(140%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+body[data-studio=index] .topbar h1 {
+  color: #ffffff !important;
+}
+body[data-studio=index] .topbar p {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+body[data-studio=index] :is(.card,.tile,.clip,.set-nav,.set-sec,.pop,.dlg,.empty){
+  background: rgba(18, 20, 26, 0.72) !important;
+  backdrop-filter: blur(24px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(140%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+body[data-studio=index] :is(.card,.tile,.set-sec,.pop,.dlg,.empty) :is(h2,h3,b,strong,dt){
+  color: #ffffff !important;
+}
+body[data-studio=index] :is(.card,.tile,.set-sec,.pop,.dlg,.empty) :is(.sub,.help,small,span,p,dd,time){
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+#heroSlot #addform{max-width:none;background:transparent;backdrop-filter:none;box-shadow:0 0 12px rgba(218,231,255,.12);position:relative;isolation:isolate;border-radius:16px;border-color:transparent}
+#heroSlot .composer-input{margin:7px 7px 4px;background:#1d1d1d;border-radius:16px;position:relative;display:flex;align-items:center}
+stan-home-input-beam{display:block;position:absolute;inset:0;z-index:-1;pointer-events:none}
+.home-beam-face{width:100%;height:100%;border-radius:16px;background:transparent}
+#heroSlot .composer-input #url{height:64px;font-size:17px;color:#fafafa;background:transparent !important;border:none !important;box-shadow:none !important;outline:none !important;border-radius:16px;padding:0 20px 0 54px !important;width:100% !important}
+#heroSlot .composer-input #url::placeholder{color:#c2c4c7;opacity:1}
+#heroSlot .composer-input>svg{color:#b8bec1;position:absolute !important;left:20px !important;top:50% !important;transform:translateY(-50%) !important;width:20px !important;height:20px !important;pointer-events:none !important;z-index:3 !important}
+#heroSlot .composer-input:focus-within>svg{color:#ccff00 !important}
+#heroSlot #url:focus-visible{outline:none !important}
+@media(prefers-reduced-motion:reduce){stan-home-input-beam *,stan-home-input-beam ::before,stan-home-input-beam ::after{animation-play-state:paused!important}}
+
+#heroSlot .composer-bar .chip{background:rgb(18 20 24 / 56%);color:#e4e7ec}
+#heroSlot .composer-bar .chip:is(:hover,.on),#heroSlot .pick.open .chip{background:rgb(65 69 75 / 80%);color:white}
+#heroSlot .composer-bar .hint{color:#d2d6dc}
+#heroSlot .composer-opts.open{background:rgba(22, 24, 30, 0.95) !important;border-radius:0 0 16px 16px !important;border-top:1px solid rgba(255, 255, 255, 0.08) !important;color:#ffffff !important}
+
+/* Shared workspace surfaces sit above the existing route backgrounds. */
+#app:not([data-page=overview]) :is(.topbar,#view){max-width:1120px !important;width:100% !important;margin-inline:auto !important;padding-inline:0 !important}
+#app:not([data-page=overview]) #view{color:#f5f5f5 !important;padding-block:16px 48px !important}
+#app:not([data-page=overview]) .topbar{border-bottom:1px solid rgba(255,255,255,0.08) !important;padding-bottom:18px !important;margin-bottom:20px !important}
+#app:not([data-page=overview]) .topbar h1{font-size:clamp(24px,2.5vw,32px) !important;font-weight:700 !important;color:#ffffff !important;letter-spacing:-0.03em !important}
+#app:not([data-page=overview]) .topbar p{color:rgba(255,255,255,0.6) !important;font-size:14px !important;margin-top:4px !important}
+
+/* Dark glass styling for Compact Composer on non-overview pages */
+#app:not([data-page=overview]) .composer.compact {
+  background: rgba(18, 20, 26, 0.65) !important;
+  backdrop-filter: blur(24px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(140%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  margin-bottom: 24px !important;
+}
+#app:not([data-page=overview]) .composer.compact .composer-input {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+}
+#app:not([data-page=overview]) .composer.compact .composer-input input {
+  color: #ffffff !important;
+  height: 60px !important;
+  padding: 0 18px 0 52px !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  background: transparent !important;
+  width: 100% !important;
+}
+#app:not([data-page=overview]) .composer.compact .composer-input input::placeholder {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+#app:not([data-page=overview]) .composer.compact .composer-input>svg {
+  color: rgba(255, 255, 255, 0.5) !important;
+  position: absolute !important;
+  left: 18px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 20px !important;
+  height: 20px !important;
+  pointer-events: none !important;
+  z-index: 3 !important;
+}
+#app:not([data-page=overview]) .composer.compact .composer-input:focus-within>svg {
+  color: #ccff00 !important;
+}
+#app:not([data-page=overview]) .composer.compact .composer-bar .chip {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #f0f0f0 !important;
+  border-radius: 999px !important;
+}
+#app:not([data-page=overview]) .composer.compact .composer-bar .chip:hover {
+  background: rgba(255, 255, 255, 0.16) !important;
+  color: #ffffff !important;
+}
+#app:not([data-page=overview]) .composer.compact .composer-bar .hint {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+#app:not([data-page=overview]) .composer.compact .btn.primary {
+  background: #ccff00 !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+  border: none !important;
+  border-radius: 999px !important;
+  box-shadow: 0 0 16px rgba(204, 255, 0, 0.35) !important;
+}
+
+/* Clips Grid in Drawer */
+body[data-studio=index] :is(.clip, .sc-clip) {
+  background: rgba(22, 24, 30, 0.9) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  color: #ffffff !important;
+  transition: all 0.2s ease !important;
+}
+body[data-studio=index] :is(.clip, .sc-clip):hover {
+  border-color: rgba(204, 255, 0, 0.45) !important;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.6) !important;
+}
+body[data-studio=index] :is(.clip, .sc-clip) .hook {
+  color: #ccff00 !important;
+  font-weight: 700 !important;
+  font-size: 15px !important;
+  letter-spacing: -0.01em !important;
+}
+body[data-studio=index] :is(.clip, .sc-clip) .ttl {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+}
+body[data-studio=index] .sc-destination {
+  font-size: 12px !important;
+  padding: 8px 0 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+  display: grid !important;
+  gap: 4px !important;
+  min-width: 0 !important;
+  color: #ffffff !important;
+}
+body[data-studio=index] .sc-destination > a,
+body[data-studio=index] .sc-destination > div {
+  display: flex !important;
+  align-items: baseline !important;
+  justify-content: space-between !important;
+  gap: 6px !important;
+  text-decoration: none !important;
+  color: #ffffff !important;
+  flex-wrap: wrap !important;
+}
+body[data-studio=index] .sc-destination strong {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  overflow-wrap: anywhere !important;
+}
+body[data-studio=index] .sc-destination span {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 12px !important;
+}
+body[data-studio=index] .sc-destination[data-state=posted] span {
+  color: #4ade80 !important;
+  font-weight: 600 !important;
+}
+body[data-studio=index] .sc-destination[data-state=posting] span {
+  color: #60a5fa !important;
+  font-weight: 600 !important;
+}
+body[data-studio=index] .sc-destination[data-state=scheduled] span {
+  color: #facc15 !important;
+  font-weight: 600 !important;
+}
+body[data-studio=index] .sc-destination[data-state=failed] span,
+body[data-studio=index] .sc-destination small {
+  color: #f87171 !important;
+}
+body[data-studio=index] .clip .badge {
+  background: rgba(0, 0, 0, 0.75) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+body[data-studio=index] .clip .badge.s-hi {
+  background: #ccff00 !important;
+  color: #000000 !important;
+  border-color: #ccff00 !important;
+  font-weight: 700 !important;
+}
+body[data-studio=index] .clip-foot {
+  display: flex !important;
+  gap: 6px !important;
+  align-items: center !important;
+  margin-top: auto !important;
+  padding-top: 8px !important;
+}
+body[data-studio=index] .clip-foot .btn.icon.ghost,
+body[data-studio=index] .clip-foot a.btn.icon.ghost {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  transition: all 0.15s ease !important;
+}
+body[data-studio=index] .clip-foot .btn.icon.ghost:hover,
+body[data-studio=index] .clip-foot a.btn.icon.ghost:hover {
+  background: rgba(255, 255, 255, 0.18) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+}
+body[data-studio=index] .clip-foot svg {
+  color: #ffffff !important;
+  fill: currentColor !important;
+}
+body[data-studio=index] .clip-foot button[data-act="openclip"] {
+  background: #ffffff !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+  border: none !important;
+  border-radius: 999px !important;
+  padding: 6px 14px !important;
+  font-size: 13px !important;
+  transition: all 0.15s ease !important;
+}
+body[data-studio=index] .clip-foot button[data-act="openclip"]:hover {
+  background: #f0f0f0 !important;
+  transform: scale(1.02) !important;
+}
+body[data-studio=index] .clip-foot button[data-act="openclip"] svg {
+  color: #000000 !important;
+  fill: currentColor !important;
+}
+#app:not([data-page=overview]) :is(.card,.set-sec,.empty){padding:clamp(16px,2vw,24px)}
+#app:not([data-page=overview]) :is(.card,.set-sec,.empty,.job) h2{font:var(--heading)}
+#app:not([data-page=overview]) :is(.job,.card,.tile,.set-sec,.set-body,.scroll,.composer,.row,.titles){min-width:0}
+#app:not([data-page=overview]) :is(.set-sec,.card,.empty) :is(.sub,.help,small){color:rgba(255,255,255,0.65) !important}
+#app:not([data-page=overview]) .set-link.on{background:rgba(204,255,0,0.14) !important;border:1px solid rgba(204,255,0,0.35) !important;color:#ffffff !important}
+#app:not([data-page=overview]) .tabbtn.on{background:#ccff00 !important;color:#000000 !important}
+#app:not([data-page=overview]) :is(.home-grid,.split,.tiles,.set-layout){gap:var(--s4)}
+#app .scroll{max-width:100%;overflow-x:auto}
+body[data-studio] dialog{max-width:calc(100vw - 2 * var(--s4));max-height:calc(100dvh - 2 * var(--s4));overflow:auto}
+body[data-studio] :is(button,input,select,textarea):disabled{cursor:not-allowed}
+body[data-studio] :focus-visible{outline-color:var(--focus)}
+body[data-studio=admin] #main{background:var(--canvas);color:var(--ink)}
+body[data-studio=admin] .topbar h1{color:var(--ink)}
+@media(max-width:760px),(max-height:560px){
+  body[data-studio=index] #main{height:100dvh!important;padding:calc(72px + env(safe-area-inset-top)) var(--s4) var(--s6)!important}
+  .floating-flyout-menu{right:auto;left:50%;transform:translateX(-50%);max-width:calc(100vw - 32px)}
+  #app[data-page=overview] #heroSlot{padding:0;min-height:calc(100dvh - 152px)}
+  #app[data-page=overview] #heroSlot .hero{padding:var(--s6) var(--s3)}
+  #app[data-page=overview] #heroSlot .sc-frames{gap:var(--s2)}
+  #app .composer-bar{flex-wrap:wrap}
+  #app .composer-bar .hint{display:none}
+  #app .composer-bar .btn.primary{width:100%}
+  #app :is(.btn,.chip,.set-link,.tabbtn){min-height:var(--target)}
+  #app .set-nav{display:flex;flex-wrap:wrap;overflow:visible;gap:var(--s1)}
+  #app .topbar.tabbed .titles{max-width:none}
+  #app .topbar.tabbed .utabs{position:relative;transform:none;width:100%;order:5}
+  #app .sc-strip{grid-auto-columns:min(78vw,285px)}
+  #app .tiles.five{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #app .row{flex-wrap:wrap}
+  #app .content :is(h2,h3,p,td,.help){overflow-wrap:anywhere}
+}
+
+body[data-studio=index] .pick-menu{background:var(--frame);color:var(--on-stage);border:1px solid var(--frame-line);border-radius:var(--preview-radius)}
+body[data-studio=index] .pick-menu .pick-opt:hover{background:var(--frame-2)}
+@media(max-width:760px){
+  #app .composer-bar{position:relative}
+  #app .composer-bar .pick{position:static}
+  #app .composer-bar .pick-menu{inset-inline:var(--s2);width:auto;min-width:0;max-width:none}
+  #app .btn.icon{min-width:var(--target)}
+}
+
+body[data-studio=legal] footer.site .fbrand .fcta{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+body:is([data-studio=auth],[data-studio=reset]) .main{color:var(--ink)}
+@media(max-width:760px){
+  body:is([data-studio=auth],[data-studio=reset],[data-studio=landing],[data-studio=admin]) .btn,
+  body[data-studio=layout_studio] :is(.preset-pill,.tab,.region-tab,.preview-tool,.btn),
+  body[data-studio=legal] header nav a{min-height:var(--target)}
+  body[data-studio=legal] header nav a{display:inline-flex;align-items:center}
+  body:is([data-studio=auth],[data-studio=reset]) .pwbox button{width:var(--target);height:var(--target)}
+  body[data-studio=layout_studio] .header-center{justify-content:flex-start;min-width:0}
+}
+
+#app .utabs .ind{display:none !important}
+#app .utabs .tabbtn.on{background:#ccff00 !important;color:#000000 !important}
+#app .appact .btn.primary{background:#ccff00 !important;border:none !important;color:#000000 !important;font-weight:700 !important}
+#app .appact .btn.primary:hover{background:#bde900 !important}
+
+/* ==========================================================================
+   Comprehensive Dark Glass Theme for Creators, AI Models & Settings
+   ========================================================================== */
+
+/* -------------------------------------------------- 1. AI Models / Usage Tab */
+body[data-studio=index] #usage {
+  color: #ffffff !important;
+}
+body[data-studio=index] #usage .tiles {
+  display: grid !important;
+  gap: 16px !important;
+  margin-bottom: 24px !important;
+}
+body[data-studio=index] #usage .tile {
+  background: rgba(18, 20, 26, 0.72) !important;
+  backdrop-filter: blur(24px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(140%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 18px !important;
+  padding: 20px !important;
+  color: #ffffff !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+body[data-studio=index] #usage .tile i {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 10px !important;
+  background: rgba(204, 255, 0, 0.12) !important;
+  color: #ccff00 !important;
+  border: 1px solid rgba(204, 255, 0, 0.25) !important;
+  display: grid !important;
+  place-items: center !important;
+  margin-bottom: 14px !important;
+}
+body[data-studio=index] #usage .tile i svg {
+  width: 18px !important;
+  height: 18px !important;
+  color: #ccff00 !important;
+}
+body[data-studio=index] #usage .tile b {
+  font-size: 26px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.02em !important;
+}
+body[data-studio=index] #usage .tile span {
+  font-size: 13px !important;
+  color: rgba(255, 255, 255, 0.65) !important;
+  margin-top: 4px !important;
+}
+body[data-studio=index] #usage .card {
+  background: rgba(18, 20, 26, 0.72) !important;
+  backdrop-filter: blur(24px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(140%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 20px !important;
+  padding: 24px !important;
+  margin-bottom: 24px !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+}
+body[data-studio=index] #usage .card-head h2 {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+}
+body[data-studio=index] #usage .card-head .sub {
+  color: rgba(255, 255, 255, 0.65) !important;
+  font-size: 13px !important;
+}
+body[data-studio=index] #usage .chart {
+  margin-top: 16px !important;
+}
+body[data-studio=index] #usage .chart .gl {
+  stroke: rgba(255, 255, 255, 0.08) !important;
+}
+body[data-studio=index] #usage .chart text {
+  fill: rgba(255, 255, 255, 0.6) !important;
+}
+body[data-studio=index] #usage .chart .b1 {
+  fill: #ccff00 !important;
+}
+body[data-studio=index] #usage .chart .none {
+  fill: rgba(255, 255, 255, 0.5) !important;
+}
+body[data-studio=index] #usage .hbar {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+  margin-top: 12px !important;
+}
+body[data-studio=index] #usage .hbar-row .top {
+  display: flex !important;
+  justify-content: space-between !important;
+  margin-bottom: 6px !important;
+  font-size: 13px !important;
+}
+body[data-studio=index] #usage .hbar-row .top span:first-child {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+body[data-studio=index] #usage .hbar-row .top span:last-child {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+body[data-studio=index] #usage .hbar-row .track {
+  height: 6px !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  overflow: hidden !important;
+}
+body[data-studio=index] #usage .hbar-row .track i {
+  background: #ccff00 !important;
+  height: 100% !important;
+  display: block !important;
+  border-radius: 999px !important;
+}
+body[data-studio=index] #usage table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin-top: 8px !important;
+}
+body[data-studio=index] #usage th {
+  color: rgba(255, 255, 255, 0.55) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  padding: 10px 12px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+body[data-studio=index] #usage td {
+  color: #ffffff !important;
+  font-size: 13px !important;
+  padding: 12px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+body[data-studio=index] #usage td.sub {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+body[data-studio=index] #usage tr:hover td {
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+body[data-studio=index] #usage .note {
+  background: rgba(245, 158, 11, 0.12) !important;
+  border: 1px solid rgba(245, 158, 11, 0.3) !important;
+  color: #fde68a !important;
+  border-radius: 14px !important;
+  padding: 14px 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+body[data-studio=index] #usage .note svg {
+  color: #facc15 !important;
+  flex: none !important;
+  width: 20px !important;
+  height: 20px !important;
+}
+
+/* -------------------------------------------------- 2. Settings Tab */
+body[data-studio=index] #sform {
+  color: #ffffff !important;
+}
+body[data-studio=index] #sform .set-layout {
+  display: grid !important;
+  grid-template-columns: 260px minmax(0, 1fr) !important;
+  gap: 24px !important;
+  align-items: start !important;
+}
+@media (max-width: 860px) {
+  body[data-studio=index] #sform .set-layout {
+    grid-template-columns: 1fr !important;
+  }
+}
+body[data-studio=index] #sform .set-nav {
+  background: rgba(18, 20, 26, 0.72) !important;
+  backdrop-filter: blur(24px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(140%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 20px !important;
+  padding: 10px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+body[data-studio=index] #sform .set-link {
+  display: flex !important;
+  gap: 12px !important;
+  align-items: flex-start !important;
+  padding: 12px 14px !important;
+  border-radius: 14px !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+  text-decoration: none !important;
+  transition: all 0.15s ease !important;
+}
+body[data-studio=index] #sform .set-link svg {
+  color: rgba(255, 255, 255, 0.65) !important;
+  flex: none !important;
+  width: 18px !important;
+  height: 18px !important;
+  margin-top: 2px !important;
+}
+body[data-studio=index] #sform .set-link b {
+  display: block !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+}
+body[data-studio=index] #sform .set-link small {
+  display: block !important;
+  font-size: 12px !important;
+  color: rgba(255, 255, 255, 0.5) !important;
+  line-height: 1.4 !important;
+  margin-top: 2px !important;
+}
+body[data-studio=index] #sform .set-link:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+}
+body[data-studio=index] #sform .set-link.on {
+  background: rgba(204, 255, 0, 0.14) !important;
+  border: 1px solid rgba(204, 255, 0, 0.35) !important;
+  color: #ffffff !important;
+}
+body[data-studio=index] #sform .set-link.on svg {
+  color: #ccff00 !important;
+}
+body[data-studio=index] #sform .set-link.on b {
+  color: #ccff00 !important;
+}
+body[data-studio=index] #sform .set-link.on small {
+  color: rgba(204, 255, 0, 0.85) !important;
+}
+body[data-studio=index] #sform .set-sec {
+  background: rgba(18, 20, 26, 0.72) !important;
+  backdrop-filter: blur(24px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(140%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 20px !important;
+  padding: clamp(20px, 2.5vw, 32px) !important;
+  margin-bottom: 24px !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+}
+body[data-studio=index] #sform .set-sec h2 {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  margin-bottom: 6px !important;
+  letter-spacing: -0.02em !important;
+}
+body[data-studio=index] #sform .set-sec .help {
+  color: rgba(255, 255, 255, 0.65) !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  margin-bottom: 20px !important;
+}
+body[data-studio=index] #sform .set-sec .ai-state {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin-bottom: 20px !important;
+  flex-wrap: wrap !important;
+}
+body[data-studio=index] #sform .set-sec .ai-state .sub {
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-size: 14px !important;
+}
+body[data-studio=index] #sform .prof {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+  margin-bottom: 24px !important;
+}
+body[data-studio=index] #sform .prof b {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+}
+body[data-studio=index] #sform .prof span {
+  font-size: 13px !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+body[data-studio=index] #sform .kv {
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  margin-bottom: 20px !important;
+}
+body[data-studio=index] #sform .kv div {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  padding: 14px 0 !important;
+}
+body[data-studio=index] #sform .kv dt {
+  color: rgba(255, 255, 255, 0.55) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+}
+body[data-studio=index] #sform .kv dd {
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+body[data-studio=index] #sform .stor-path code {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #ccff00 !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+}
+body[data-studio=index] #sform .stor-bar {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 999px !important;
+  height: 10px !important;
+}
+body[data-studio=index] #sform .stor-bar i {
+  background: #ccff00 !important;
+  border-radius: 999px !important;
+}
+body[data-studio=index] #sform .stor-nums {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+body[data-studio=index] #sform .stor-nums b {
+  color: #ffffff !important;
+}
+body[data-studio=index] #sform .stor-change {
+  background: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 14px !important;
+  padding: 16px !important;
+}
+body[data-studio=index] #sform .appcard {
+  background: rgba(18, 20, 26, 0.72) !important;
+  backdrop-filter: blur(24px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(140%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 16px !important;
+  padding: 18px 20px !important;
+  margin-bottom: 16px !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+}
+body[data-studio=index] #sform .apptx b {
+  color: #ffffff !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+}
+body[data-studio=index] #sform .apptx span {
+  color: rgba(255, 255, 255, 0.65) !important;
+  font-size: 13px !important;
+}
+body[data-studio=index] #sform .appsetup {
+  background: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 14px !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  padding: 16px !important;
+}
+body[data-studio=index] #sform .appsetup ol {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+body[data-studio=index] #sform .appsetup a {
+  color: #ccff00 !important;
+}
+body[data-studio=index] #sform .appsetup .copyrow code {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+}
+body[data-studio=index] #sform .applist div {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 10px !important;
+  color: #ffffff !important;
+  padding: 8px 12px !important;
+}
+body[data-studio=index] #sform .applist b {
+  color: #ffffff !important;
+}
+
+/* -------------------------------------------------- 3. Creators Tab */
+body[data-studio=index] .utabs {
+  background: rgba(22, 24, 30, 0.85) !important;
+  backdrop-filter: blur(24px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(140%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 999px !important;
+  padding: 4px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+}
+body[data-studio=index] .utabs .ind {
+  display: none !important;
+}
+body[data-studio=index] .utabs .tabbtn {
+  background: transparent !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+  border-radius: 999px !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  padding: 0 16px !important;
+  height: 36px !important;
+  border: 1px solid transparent !important;
+  transition: all 0.15s ease !important;
+}
+body[data-studio=index] .utabs .tabbtn svg {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+body[data-studio=index] .utabs .tabbtn:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+}
+body[data-studio=index] .utabs .tabbtn.on {
+  background: #ccff00 !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+  border-color: #ccff00 !important;
+  box-shadow: 0 0 16px rgba(204, 255, 0, 0.35) !important;
+}
+body[data-studio=index] .utabs .tabbtn.on svg {
+  color: #000000 !important;
+}
+body[data-studio=index] .utabs .tabbtn .n {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+  border-radius: 999px !important;
+  padding: 1px 7px !important;
+  font-size: 11px !important;
+}
+body[data-studio=index] .utabs .tabbtn.on .n {
+  background: rgba(0, 0, 0, 0.2) !important;
+  color: #000000 !important;
+}
+body[data-studio=index] .empty {
+  background: rgba(18, 20, 26, 0.72) !important;
+  backdrop-filter: blur(24px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(140%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 20px !important;
+  color: #ffffff !important;
+  padding: 48px 24px !important;
+  text-align: center !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45) !important;
+}
+body[data-studio=index] .empty b {
+  color: #ffffff !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  margin: 12px 0 6px !important;
+  display: block !important;
+}
+body[data-studio=index] #cform .card {
+  background: rgba(18, 20, 26, 0.72) !important;
+  backdrop-filter: blur(24px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(140%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 20px !important;
+  padding: clamp(20px, 2.5vw, 32px) !important;
+  margin-bottom: 24px !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+}
+body[data-studio=index] #cform .card h2 {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  margin-bottom: 6px !important;
+  letter-spacing: -0.02em !important;
+}
+body[data-studio=index] #cform .card .help {
+  color: rgba(255, 255, 255, 0.65) !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+body[data-studio=index] #cform .chans {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  margin-top: 12px !important;
+}
+body[data-studio=index] #cform .chan {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 14px !important;
+  padding: 12px 16px !important;
+  color: #ffffff !important;
+}
+body[data-studio=index] #cform .chan .who b {
+  color: #ffffff !important;
+}
+body[data-studio=index] #cform .chan .who span {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+body[data-studio=index] #cform .danger-card {
+  background: rgba(32, 16, 20, 0.72) !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+}
+body[data-studio=index] #cform .danger-card h2 {
+  color: #f87171 !important;
+}
+body[data-studio=index] #savebar {
+  background: rgba(18, 20, 26, 0.95) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 16px !important;
+  color: #ffffff !important;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6) !important;
+}
+body[data-studio=index] #savebar span svg {
+  color: #ccff00 !important;
+}
+body[data-studio=index] #clog .card {
+  background: rgba(18, 20, 26, 0.72) !important;
+  backdrop-filter: blur(24px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(140%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 20px !important;
+  color: #ffffff !important;
+  padding: 24px !important;
+}
+body[data-studio=index] #clog .log div {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  padding: 12px 0 !important;
+}
+body[data-studio=index] #clog .log time {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+
+/* -------------------------------------------------- 4. Form Inputs & Buttons */
+body[data-studio=index] :where(input:not([type=checkbox],[type=radio],[type=file],[type=range],#url), select, textarea) {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: #ffffff !important;
+  border-radius: 10px !important;
+  padding: 0 14px !important;
+  transition: all 0.15s ease !important;
+}
+body[data-studio=index] :where(input:not([type=checkbox],[type=radio],[type=file],[type=range],#url), select, textarea):hover {
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+body[data-studio=index] :where(input:not([type=checkbox],[type=radio],[type=file],[type=range],#url), select, textarea):focus {
+  background: rgba(255, 255, 255, 0.09) !important;
+  border-color: #ccff00 !important;
+  outline: 1px solid #ccff00 !important;
+  color: #ffffff !important;
+}
+
+/* -------------------------------------------------- 5. Video Attachment & Fetching Preview (.lp) */
+body[data-studio=index] .att {
+  transition: grid-template-rows 0.3s ease !important;
+}
+body[data-studio=index] .att-in {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  padding: 4px 12px 12px !important;
+}
+body[data-studio=index] .lp,
+body[data-studio=index] .composer .lp,
+body[data-studio=index] .composer.compact .lp {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  padding: 10px 14px !important;
+  border-radius: 14px !important;
+  background: rgba(22, 24, 30, 0.78) !important;
+  backdrop-filter: blur(20px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(140%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  transition: all 0.2s ease !important;
+}
+body[data-studio=index] .lp:hover {
+  background: rgba(28, 30, 38, 0.88) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+body[data-studio=index] .lp .th {
+  position: relative !important;
+  flex: none !important;
+  width: 116px !important;
+  aspect-ratio: 16/9 !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+  background: rgba(0, 0, 0, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+body[data-studio=index] .lp .th img,
+body[data-studio=index] .lp .th video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+body[data-studio=index] .lp .th .du {
+  position: absolute !important;
+  right: 6px !important;
+  bottom: 6px !important;
+  background: rgba(0, 0, 0, 0.8) !important;
+  color: #ffffff !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  padding: 2px 6px !important;
+  border-radius: 6px !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+body[data-studio=index] .lp .tx {
+  min-width: 0 !important;
+  flex: 1 !important;
+}
+body[data-studio=index] .lp .tx b {
+  display: block !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  letter-spacing: -0.01em !important;
+}
+body[data-studio=index] .lp .tx span {
+  display: block !important;
+  font-size: 12px !important;
+  color: rgba(255, 255, 255, 0.65) !important;
+  margin-top: 3px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+body[data-studio=index] .lp .ok {
+  flex: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: #4ade80 !important;
+  background: rgba(74, 222, 128, 0.15) !important;
+  border: 1px solid rgba(74, 222, 128, 0.3) !important;
+  padding: 4px 10px !important;
+  border-radius: 999px !important;
+}
+body[data-studio=index] .lp .ok svg {
+  width: 14px !important;
+  height: 14px !important;
+  color: #4ade80 !important;
+}
+body[data-studio=index] .lp .ok.live {
+  background: rgba(239, 68, 68, 0.2) !important;
+  color: #f87171 !important;
+  border: 1px solid rgba(239, 68, 68, 0.4) !important;
+}
+body[data-studio=index] .lp .ok.up {
+  background: rgba(204, 255, 0, 0.15) !important;
+  color: #ccff00 !important;
+  border: 1px solid rgba(204, 255, 0, 0.3) !important;
+}
+body[data-studio=index] .lp .rm {
+  flex: none !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 8px !important;
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  color: rgba(255, 255, 255, 0.5) !important;
+  display: grid !important;
+  place-items: center !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+body[data-studio=index] .lp .rm:hover {
+  background: rgba(239, 68, 68, 0.15) !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+  color: #f87171 !important;
+}
+body[data-studio=index] .lp.wait {
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+body[data-studio=index] .lp.wait .th,
+body[data-studio=index] .sk {
+  background: linear-gradient(90deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.04) 100%) !important;
+  background-size: 200% 100% !important;
+}
+body[data-studio=index] .lp.bad {
+  background: rgba(239, 68, 68, 0.12) !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+  color: #f87171 !important;
+}
+body[data-studio=index] .lp.bad b {
+  color: #ffffff !important;
+}
+body[data-studio=index] .lp.bad svg {
+  color: #f87171 !important;
+}
+body[data-studio=index] .addrow {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  width: 100% !important;
+  height: 42px !important;
+  padding: 0 14px !important;
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px dashed rgba(255, 255, 255, 0.18) !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+body[data-studio=index] .addrow:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(204, 255, 0, 0.5) !important;
+  color: #ffffff !important;
+}
+body[data-studio=index] .addrow svg {
+  color: #ccff00 !important;
+}
+body[data-studio=index] .addrow span {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+body[data-studio=index] select option {
+  background: #181a20 !important;
+  color: #ffffff !important;
+}
+body[data-studio=index] label.f {
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+}
+body[data-studio=index] label.ck {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+  border-radius: 10px !important;
+}
+body[data-studio=index] label.ck:has(input:checked) {
+  background: rgba(204, 255, 0, 0.14) !important;
+  border-color: rgba(204, 255, 0, 0.4) !important;
+  color: #ccff00 !important;
+}
+body[data-studio=index] label.sw {
+  color: #ffffff !important;
+}
+body[data-studio=index] label.sw input {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+body[data-studio=index] label.sw input:checked {
+  background: #ccff00 !important;
+}
+body[data-studio=index] label.sw input:checked::after {
+  background: #000000 !important;
+}
+
+/* Global Buttons in index */
+body[data-studio=index] .btn.primary,
+body[data-studio=index] .btn-primary {
+  background: #ccff00 !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+  border: none !important;
+  border-radius: 999px !important;
+  box-shadow: 0 0 16px rgba(204, 255, 0, 0.35) !important;
+  transition: all 0.15s ease !important;
+}
+body[data-studio=index] .btn.primary:hover,
+body[data-studio=index] .btn-primary:hover {
+  background: #bde900 !important;
+  transform: scale(1.02) !important;
+}
+body[data-studio=index] .btn.danger {
+  background: rgba(239, 68, 68, 0.2) !important;
+  border: 1px solid rgba(239, 68, 68, 0.4) !important;
+  color: #f87171 !important;
+  border-radius: 999px !important;
+}
+body[data-studio=index] .btn.danger:hover {
+  background: rgba(239, 68, 68, 0.35) !important;
+}
+body[data-studio=index] .btn:not(.primary):not(.danger):not(.btn-primary) {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+  border-radius: 999px !important;
+  transition: all 0.15s ease !important;
+}
+body[data-studio=index] .btn:not(.primary):not(.danger):not(.btn-primary):hover {
+  background: rgba(255, 255, 255, 0.16) !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+}
+body[data-studio=index] .btn.ghost {
+  background: transparent !important;
+  border-color: transparent !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+body[data-studio=index] .btn.ghost:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+body[data-studio=index] :is(.pop, dialog[open], .dlg) {
+  background: rgba(18, 20, 26, 0.94) !important;
+  backdrop-filter: blur(24px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(140%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: 20px !important;
+  color: #ffffff !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+/* ==========================================================================
+   6. Composer Options Drawer (.composer-opts, .og, .ob, .nstep, .tile-o, etc.)
+   ========================================================================== */
+
+body[data-studio=index] .composer-opts,
+body[data-studio=index] #heroSlot .composer-opts,
+body[data-studio=index] .composer.compact .composer-opts {
+  transition: grid-template-rows 0.32s ease, opacity 0.25s ease !important;
+}
+body[data-studio=index] .composer-opts.open,
+body[data-studio=index] #heroSlot .composer-opts.open,
+body[data-studio=index] .composer.compact .composer-opts.open {
+  background: rgba(14, 16, 22, 0.92) !important;
+  backdrop-filter: blur(24px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(140%) !important;
+  border-radius: 0 0 20px 20px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 16px 40px rgba(0, 0, 0, 0.5) !important;
+}
+/* Follow the drawer width: source settings, framing, then caption and output settings. */
+body[data-studio=index] .composer-opts{container-type:inline-size}
+body[data-studio=index] .composer-opts > .og {
+  padding:14px 14px 16px !important;
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) !important;
+  gap:12px !important;
+}
+body[data-studio=index] .ob:has(#o_layout) .tiles3{
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+}
+@container (min-width:520px){
+  body[data-studio=index] .ob:has(#o_layout) .tiles3{grid-template-columns:repeat(5,minmax(0,1fr)) !important}
+}
+@container (min-width:700px){
+  body[data-studio=index] .composer-opts > .og{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) !important}
+  .og > :is(.ob:has(#o_layout),#gameplay_sub_opts){grid-column:1/-1}
+}
+
+/* Option card boxes (.ob) */
+body[data-studio=index] .ob,
+body[data-studio=index] .composer .ob,
+body[data-studio=index] .composer.compact .ob {
+  background: rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 16px !important;
+  padding: 14px 16px 16px !important;
+  min-width: 0 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25) !important;
+}
+body[data-studio=index] .ob.wide {
+  grid-column: 1 / -1 !important;
+}
+
+/* Section titles (.ot) */
+body[data-studio=index] .ot {
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  margin-bottom: 12px !important;
+  letter-spacing: -0.01em !important;
+}
+body[data-studio=index] .ot.cap-head {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+}
+body[data-studio=index] .ot.cap-head label {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  cursor: pointer !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+}
+body[data-studio=index] .ot.cap-head input[type=checkbox] {
+  accent-color: #ccff00 !important;
+  width: 15px !important;
+  height: 15px !important;
+  cursor: pointer !important;
+}
+
+/* Stepper cards (How many, Shortest, Longest) */
+body[data-studio=index] .nsteps {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+}
+/* Use the width of the Clips card, including when it shares a desktop row. */
+body[data-studio=index] .ob:has(> .nsteps){container-type:inline-size}
+@container (max-width:510px){
+  body[data-studio=index] .nsteps{grid-template-columns:1fr !important}
+  body[data-studio=index] .composer .nsteps .nstep{
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) auto;
+    align-items:center;
+  }
+  body[data-studio=index] .nsteps .ctl{width:136px}
+}
+body[data-studio=index] .nstep,
+body[data-studio=index] .composer.compact .nstep {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  border-radius: 12px !important;
+  padding: 10px 12px 10px !important;
+}
+body[data-studio=index] .nstep > span {
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+body[data-studio=index] .nstep .ctl {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+body[data-studio=index] .nstep .ctl button,
+body[data-studio=index] .composer.compact .nstep .ctl button {
+  flex: none !important;
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 8px !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  display: grid !important;
+  place-items: center !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+body[data-studio=index] .nstep .ctl button:hover,
+body[data-studio=index] .nstep .ctl button:focus-visible {
+  background: #ccff00 !important;
+  color: #000000 !important;
+  border-color: #ccff00 !important;
+}
+body[data-studio=index] .nstep .ctl button svg {
+  width: 14px !important;
+  height: 14px !important;
+  color: inherit !important;
+}
+body[data-studio=index] .nstep input,
+body[data-studio=index] .nstep input:focus {
+  flex: 1 !important;
+  min-width: 3.3ch !important;
+  font-variant-numeric: tabular-nums;
+  height: 30px !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  background: transparent !important;
+  text-align: center !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+}
+body[data-studio=index] .nstep .ctl i {
+  font-style: normal !important;
+  font-size: 13px !important;
+  color: rgba(255, 255, 255, 0.55) !important;
+  width: 10px !important;
+}
+
+/* Option tile buttons (.tile-o: Caption style & Layout) */
+body[data-studio=index] .tiles3 {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+}
+body[data-studio=index] .tile-o,
+body[data-studio=index] .composer.compact .tile-o {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  padding: 8px 8px 10px !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  text-align: center !important;
+  transition: all 0.15s ease !important;
+}
+body[data-studio=index] .tile-o:enabled:hover,
+body[data-studio=index] .tile-o:focus-visible {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
+  color: #ffffff !important;
+}
+body[data-studio=index] .tile-o[aria-pressed=true] {
+  background: rgba(204, 255, 0, 0.14) !important;
+  border-color: #ccff00 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 14px rgba(204, 255, 0, 0.25) !important;
+}
+body[data-studio=index] .tile-o:disabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
+}
+body[data-studio=index] .cap-prev {
+  height: 54px !important;
+  border-radius: 8px !important;
+  background: #0d0f14 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #ffffff !important;
+}
+body[data-studio=index] .lay-prev {
+  height: 54px !important;
+  border-radius: 8px !important;
+  background: #0d0f14 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+/* Video Quality & Segmented Controls (.seg) */
+body[data-studio=index] .seg,
+body[data-studio=index] .composer.compact .seg {
+  display: flex !important;
+  gap: 4px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  border-radius: 12px !important;
+  padding: 4px !important;
+}
+body[data-studio=index] .seg button {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 2px !important;
+  padding: 8px 6px !important;
+  border: none !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+body[data-studio=index] .seg button small {
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  color: rgba(255, 255, 255, 0.5) !important;
+  transition: color 0.15s ease !important;
+}
+body[data-studio=index] .seg button:hover,
+body[data-studio=index] .seg button:focus-visible {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+}
+body[data-studio=index] .seg button[aria-pressed=true] {
+  background: rgba(204, 255, 0, 0.14) !important;
+  border: 1px solid rgba(204, 255, 0, 0.35) !important;
+  color: #ccff00 !important;
+}
+body[data-studio=index] .seg button[aria-pressed=true] small {
+  color: rgba(204, 255, 0, 0.85) !important;
+}
+
+/* Part of the Video Range (.range) */
+body[data-studio=index] .range {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+body[data-studio=index] .range label,
+body[data-studio=index] .composer.compact .range label {
+  flex: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  border-radius: 12px !important;
+  padding: 0 12px !important;
+  height: 44px !important;
+  font-size: 12px !important;
+  color: rgba(255, 255, 255, 0.55) !important;
+  min-width: 0 !important;
+}
+body[data-studio=index] .range input,
+body[data-studio=index] .range input:focus {
+  flex: 1 !important;
+  min-width: 0 !important;
+  height: 40px !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+}
+body[data-studio=index] .range > svg {
+  width: 14px !important;
+  height: 14px !important;
+  color: rgba(255, 255, 255, 0.4) !important;
+  flex: none !important;
+}
+
+/* Dropdown menu (.pick-menu) */
+body[data-studio=index] .pick-menu {
+  background: rgba(18, 20, 26, 0.95) !important;
+  backdrop-filter: blur(24px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(140%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55) !important;
+  color: #ffffff !important;
+}
+body[data-studio=index] .pick-opt {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+body[data-studio=index] .pick-opt:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+}
+body[data-studio=index] .pick-opt[aria-selected=true] {
+  color: #ccff00 !important;
+}
+body[data-studio=index] .pick-opt .tick {
+  color: #ccff00 !important;
+}
+@media(max-width:600px){
+  #app .appcard{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--s3)}
+  #app .appcard :is(.appact,.appsetup){grid-column:1/-1;justify-content:flex-start}
+  #app .appcard .apptx{min-width:0}
+}
+
+.lay-prev.podcast .ph{width:44px;height:32px;background:#302621}
+.lay-prev.podcast .ph::before{inset:3px 22px 3px 2px;border:1px solid currentColor;border-radius:3px;filter:none;background:none}
+.lay-prev.podcast .ph i,.lay-prev.podcast .ph span{position:absolute;top:9px;width:10px;height:10px;border-radius:50%;background:#ffac72;transform:none;box-shadow:0 9px 0 2px #a86844}
+.lay-prev.podcast .ph i{left:7px;right:auto}
+.lay-prev.podcast .ph span{right:6px}
+
+body[data-studio=index] #o_style + .tiles3 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 108px), 1fr)) !important;
+}
+#o_style + .tiles3 .cap-prev { width:100%; white-space:normal; line-height:1.15; font-size:12px; }
+.cap-bounce {font-family:"Archivo Black",sans-serif}
+.cap-bounce b {color:#ffff00}
+.cap-hype,.cap-pulse {font-family:Anton,sans-serif}
+.cap-hype b {color:#ff3c3c}
+.cap-clean b {color:#6bd7ff}
+.cap-cinema {color:#faf4e8}
+.cap-speaker_card > span > span {display:inline-block;background:#222529;padding:4px 6px;text-align:left;border-radius:3px}
+.cap-marker mark {background:#ccff00;color:#161616;padding:1px 2px;-webkit-text-stroke:0}
+.cap-word_build i {visibility:hidden;font-style:normal}
+.cap-pulse strong {font-size:1.55em}
+.cap-sweep b {background:linear-gradient(90deg,#c1daf3 55%,white 55%);background-clip:text;color:transparent;-webkit-text-stroke:0}
+.cap-focus_line small {display:block;margin-top:3px;color:#caced2}
+@media (prefers-reduced-motion:no-preference) {
+  .tile-o:enabled:is(:hover,:focus-visible) .cap-word_build i {animation:cap-reveal .65s step-end forwards}
+  .tile-o:enabled:is(:hover,:focus-visible) .cap-pulse strong {display:inline-block;animation:cap-pulse .15s ease-out}
+  @keyframes cap-reveal {from {visibility:hidden} to {visibility:visible}}
+  @keyframes cap-pulse {from {transform:scale(.94)} to {transform:scale(1)}}
+}

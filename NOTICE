@@ -1,0 +1,58 @@
+StanClips
+Copyright (c) 2026 StanClips contributors
+
+This product includes software developed by StanClip contributors and derives
+from open-source projects including PeakCut, Light-ASD, and others.
+
+================================================================================
+Upstream Project & Codebase Heritage
+================================================================================
+
+* PeakCut
+  Copyright (c) 2026 PeakCut contributors
+  Licensed under the MIT License.
+  https://github.com/haziqahmedqasmi/PeakCut
+
+* Light-ASD (Active Speaker Detection)
+  Copyright (c) Junhua Liao et al.
+  Licensed under the MIT License (studio/light_asd/LICENSE).
+  https://github.com/Junhua-Liao/Light-ASD
+
+================================================================================
+Bundled Fonts (studio/fonts/)
+================================================================================
+
+The typography rendered on video captions includes open-source typefaces:
+* Poppins (Designed by Indian Type Foundry)
+  Licensed under the SIL Open Font License, Version 1.1 (studio/fonts/OFL-poppins.txt).
+* Anton (Designed by Vernon Adams)
+  Licensed under the SIL Open Font License, Version 1.1 (studio/fonts/OFL-anton.txt).
+* Archivo Black (Designed by Omnibus-Type)
+  Licensed under the SIL Open Font License, Version 1.1 (studio/fonts/OFL-archivoblack.txt).
+
+================================================================================
+Models and Weights
+================================================================================
+
+* NeMo Parakeet 0.6B RNN-T Speech-to-Text Model
+  Copyright (c) NVIDIA Corporation.
+  Distributed under the Creative Commons Attribution 4.0 International License (CC-BY-4.0).
+  Model files are downloaded automatically on first start via studio/fetch_model.py.
+
+* AVA Pretrained Checkpoint (Light-ASD)
+  Checkpoint weights for active speaker detection are downloaded on demand
+  when podcast mode is enabled and are excluded from version control.
+
+================================================================================
+Core Third-Party Dependencies
+================================================================================
+
+* sherpa-onnx (Apache License 2.0)
+* yt-dlp (The Unlicense)
+* FFmpeg (LGPL / GPL - invoked via system subprocess; not bundled directly)
+* FastAPI & Starlette (MIT License)
+* React & React DOM (MIT License)
+* Lucide React Icons (ISC License)
+* Tailwind CSS (MIT License)
+* OpenCV (Apache License 2.0)
+* PyTorch (Modified BSD License)

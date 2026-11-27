@@ -1,0 +1,14 @@
+title = "StanClips Gitleaks Configuration"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Narrowly scoped allowlist for verified harmless mock fixtures and explicit placeholders"
+regexes = [
+    '''mock_test_[a-zA-Z0-9_]+''',
+    '''mock_dummy_[a-zA-Z0-9_]+''',
+    '''wrong_mock_[a-zA-Z0-9_]+''',
+    '''example_[a-zA-Z0-9_]+''',
+    '''change-me-[a-zA-Z0-9_\-]+''',
+]

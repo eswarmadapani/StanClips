@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 52" role="img" aria-label="Stan Clips">
+  <g transform="scale(0.1015625)">
+    <rect width="512" height="512" rx="112" fill="#ccff00"/>
+    <path d="M 340 161 L 340 200 L 233 200 L 232 201 L 229 201 L 226 203 L 224 203 L 217 207 L 205 220 L 202 226 L 201 232 L 200 233 L 200 245 L 201 246 L 201 248 L 205 255 L 209 259 L 179 289 L 176 287 L 172 281 L 164 263 L 163 255 L 162 254 L 162 246 L 161 245 L 161 233 L 162 232 L 163 221 L 170 203 L 172 201 L 177 192 L 191 178 L 195 176 L 198 173 L 212 166 L 214 166 L 218 164 L 221 164 L 222 163 L 234 162 L 235 161 L 339 161 Z" fill="#0a0a0a"/>
+    <path d="M 172 351 L 172 312 L 279 312 L 280 311 L 283 311 L 286 309 L 288 309 L 295 305 L 307 292 L 310 286 L 311 280 L 312 279 L 312 267 L 311 266 L 311 264 L 307 257 L 303 253 L 333 223 L 336 225 L 340 231 L 348 249 L 349 257 L 350 258 L 350 266 L 351 267 L 351 279 L 350 280 L 349 291 L 342 309 L 340 311 L 335 320 L 321 334 L 317 336 L 314 339 L 300 346 L 298 346 L 294 348 L 291 348 L 290 349 L 278 350 L 277 351 L 173 351 Z" fill="#0a0a0a"/>
+  </g>
+  <text x="62" y="37" font-family="Inter,system-ui,-apple-system,sans-serif" font-weight="700" font-size="28" letter-spacing="-0.5" fill="#0a0a0a">Stan Clips</text>
+</svg>

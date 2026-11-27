@@ -1,0 +1,56 @@
+# ---- never publish: settings, keys and anything users made
+.env
+.env.*
+!.env.example
+*.env
+*.env.local
+*.env.*.local
+secrets/
+*.pem
+*.key
+*.cer
+*.crt
+id_rsa*
+*service-account*.json
+*client_secret*.json
+data/
+storage.json
+*.db
+*.db-wal
+*.db-shm
+*.sqlite*
+*.log
+
+# ---- this computer only
+.claude/
+CLAUDE.local.md
+.vscode/
+.idea/
+*.bat
+Thumbs.db
+.DS_Store
+
+# ---- Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Local runtimes, working media, diagnostics and downloaded tools
+cache/
+downloads/
+inputs/
+output/
+outputs/
+scratch/
+temp/
+test_exports/
+logs/
+models/
+tools/
+id_ed25519*
+*.pfx
+*.p12
+
+frontend/node_modules/

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Community Discussions & Support
+    url: https://github.com/eswarmadapani/StanClips/discussions
+    about: Ask general questions, share workflows, and discuss with the community.
+  - name: Security Vulnerability Reporting
+    url: https://github.com/eswarmadapani/StanClips/security/policy
+    about: Report potential security vulnerabilities privately according to SECURITY.md.
